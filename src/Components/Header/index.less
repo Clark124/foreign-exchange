@@ -1,0 +1,202 @@
+.header-wrapper {
+    height    : 100px;
+    background: #2A89FF;
+
+    .header-content {
+        height         : 100px;
+        display        : flex;
+        align-items    : center;
+        font-size      : 16px;
+        color          : #fff;
+        justify-content: space-between;
+
+        .left {
+            display    : flex;
+            align-items: center;
+
+            .logo-text {
+                font-size  : 20px;
+                font-weight: bold;
+                margin-left: 10px;
+            }
+
+            .header-tab {
+                margin-left: 20px;
+
+                .tab-item {
+                    position     : relative;
+                    display      : inline-block;
+                    padding      : 8px 10px;
+                    border-bottom: 2px solid transparent;
+                    color        : #fff;
+                    margin-left  : 10px;
+                    font-size    : 15px;
+                    transition   : all 0.3s;
+                    cursor       : pointer;
+
+                    &:hover {
+                        color: #ccc;
+                    }
+
+                    &.active {
+                        border-bottom: 2px solid #fff;
+                    }
+
+                    .tab-item-select-wrapper {
+                        position   : absolute;
+                        z-index    : 2;
+                        width      : 100px;
+                        top        : 37px;
+                        left       : 50%;
+                        transform  : translateX(-50%);
+                        padding-top: 20px;
+                    }
+
+                    .tab-item-select {
+                        background: #fff;
+                        color     : #333;
+                        width     : 100px;
+                        text-align: center;
+                        transition: all 0.3s;
+
+                        >li {
+                            height       : 50px;
+                            line-height  : 50px;
+                            border-bottom: 1px solid #eaeaea;
+                            font-size    : 14px;
+                            color        : #333;
+                            cursor       : pointer;
+                            transition   : all 0.3s;
+
+                            &:hover {
+                                background: #eee;
+                            }
+                        }
+
+                        .trigle {
+                            position           : absolute;
+                            width              : 0;
+                            height             : 0;
+                            border             : 5px solid transparent;
+                            border-bottom-color: #fff;
+                            left               : 45px;
+                            top                : 10px;
+                        }
+                    }
+                }
+            }
+
+            .input-wrapper {
+                position: relative;
+
+                .input {
+                    width        : 260px;
+                    height       : 36px;
+                    border-radius: 18px;
+                    font-size    : 13px;
+                    padding-left : 20px;
+                    color        : #333;
+                    margin-right : 30px;
+                }
+
+                .search-icon {
+                    position: absolute;
+                    right   : 40px;
+                    top     : 8px;
+                    z-index : 1;
+                    cursor  : pointer;
+                }
+
+                .stock-list {
+                    position  : absolute;
+                    left      : 0;
+                    top       : 36px;
+                    z-index   : 1;
+                    width     : 260px;
+                    height    : 260px;
+                    overflow  : auto;
+                    background: #fff;
+                    border    : 1px solid #eee;
+                    box-sizing: border-box;
+
+                    // padding: 5px 0;
+                    >li {
+                        cursor      : pointer;
+                        height      : 25px;
+                        line-height : 25px;
+                        padding-left: 10px;
+
+                        .code {
+                            margin-right: 10px;
+                        }
+
+                        &:hover {
+                            background: #aaa;
+                        }
+                    }
+                }
+            }
+        }
+
+        .right {
+            display        : flex;
+            align-items    : center;
+            justify-content: space-between;
+
+            .login {
+                margin-right: 20px;
+            }
+        }
+
+        .input-wrapper {
+            position: relative;
+
+            .input {
+                width        : 260px;
+                height       : 36px;
+                border-radius: 18px;
+                font-size    : 13px;
+                padding-left : 20px;
+                color        : #333;
+                margin-right : 30px;
+            }
+
+            .search-icon {
+                position: absolute;
+                right   : 40px;
+                top     : 8px;
+                z-index : 1;
+                cursor  : pointer;
+            }
+
+            .stock-list {
+                position  : absolute;
+                left      : 0;
+                top       : 36px;
+                z-index   : 1;
+                width     : 260px;
+                height    : 260px;
+                overflow  : auto;
+                background: #fff;
+                border    : 1px solid #eee;
+                box-sizing: border-box;
+
+                >li {
+                    cursor      : pointer;
+                    height      : 25px;
+                    line-height : 25px;
+                    padding-left: 10px;
+
+                    .code {
+                        margin-right: 10px;
+                    }
+
+                    &:hover {
+                        background: #aaa;
+                    }
+                }
+            }
+        }
+
+    }
+}

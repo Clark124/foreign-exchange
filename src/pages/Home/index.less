@@ -1,11 +1,143 @@
-.home{
-    .number{
-        color: red;
-    }
-    .username{
-        span{
-            color: green;
+.home {
+    .main {
+        background : rgb(247, 247, 247);
+        min-height : 500px;
+        padding-top: 50px;
+        padding-bottom: 100px;
+        .tips {
+            display        : flex;
+            align-items    : center;
+            justify-content: space-between;
+            font-size      : 16px;
+            color          : #FA6D41;
+
+            .icon-clock {
+                display     : inline-block;
+                width       : 18px;
+                height      : 21px;
+                margin-right: 5px;
+            }
+
+            .more {
+                display    : inline-block;
+                width      : 70px;
+                height     : 28px;
+                background : #2A89FF;
+                line-height: 28px;
+                color      : #fff;
+                font-size  : 12px;
+                text-align : center;
+            }
+        }
+
+        .chart-list {
+            margin-top   : 29px;
+            margin-bottom: 25px;
+            box-sizing   : border-box;
+            padding      : 20px 15px 0 15px;
+            background   : #fff;
+            display      : inline-flex;
+            flex-wrap    : wrap;
+
+            .chart-item {
+                width        : 383px;
+                height       : 278px;
+                background   : #272D32;
+                margin-right : 10px;
+                margin-bottom: 10px;
+
+                &:nth-child(3n+3) {
+                    margin-right: 0;
+                }
+
+                .chart-item-head {
+                    display        : flex;
+                    align-items    : center;
+                    justify-content: space-between;
+                    height         : 50px;
+                    background     : #22272B;
+                    padding        : 0 10px;
+                    font-size      : 16px;
+
+                    .name {
+                        color: #fff;
+                    }
+
+                    .value,
+                    .rate {
+                        color: #FF6060;
+
+                        &.green {
+                            color: #2BE594;
+                        }
+                    }
+
+                    .replace {
+                        width        : 83px;
+                        height       : 32px;
+                        border       : 1px solid rgba(50, 56, 62, 1);
+                        border-radius: 2px;
+                        text-align   : center;
+                        line-height  : 30px;
+                        color        : #3399FF;
+                    }
+
+                }
+            }
+        }
+        .tab-pane{
+            
+            .table-wrapper{
+                width: 100%;
+                padding: 10px;
+                .table{
+                    width: 100%;
+                    .table-header{
+                        width: 100%;
+                        display: flex;
+                        height: 39px;
+                        align-items: center;
+                        background:rgba(249,249,249,1);
+                        >td{
+                            flex: 1;
+                            text-align: center;
+                            font-size: 14px;
+                            color: #666;
+                        }
+                    }
+                    .table-item{
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        padding: 10px 0;
+                        >td{
+                            flex: 1;
+                            text-align: center;
+                            font-size: 16px;
+                            color: #111;
+                            &.name{
+                                color: #111;
+                            }
+                            &.lastest-price{
+                                color: #E43737;
+                                font-weight: bold;
+                            }
+                            &.chg,&.price-change{
+                                color: #E43737;
+                                &.green{
+                                    color: #1DA407;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .pagination-wrapper {
+                padding: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
         }
     }
 }
-

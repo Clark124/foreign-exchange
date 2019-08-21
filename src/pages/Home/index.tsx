@@ -4,14 +4,16 @@ import { RouteComponentProps } from 'react-router-dom'
 import { getQuote, getKline } from '../../service/serivce'
 import { changeNumber } from '../../utils/utils'
 
+import icon_clock from '../../assets/images/clock.png'
+
 import Header from '../../Components/Header'
+import Footer from '../../Components/Footer'
+import ChartList from './components/ChartList'
+import RatePannel from './components/RatePannel'
 
 import './index.less'
 
-
-
 type IProps = RouteComponentProps
-
 
 interface IState {
     isChecked: boolean;
@@ -30,7 +32,7 @@ class Home extends Component<IProps>{
         stockDate: [],
     }
     UNSAFE_componentWillMount() {
-        this.onGetQuote('000001.SS')
+        // this.onGetQuote('000001.SS')
         this.onGetKline('000001.SS', 6)
     }
     //股票行情数据
@@ -62,7 +64,21 @@ class Home extends Component<IProps>{
     render() {
         return (
             <div className="home">
-               <Header/>
+                <Header {...this.props} />
+                <div className="main">
+                    <div className="container">
+                        <div className="tips">
+                            <div className="text">
+                                <img src={icon_clock} alt="" className="icon-clock" />Offshore RMB against the US dollar once fell below the 6.94 pass, dropping about 150 points during the day.
+                            </div>
+                            <span className="more btn">MORE +</span>
+                        </div>
+                        <ChartList {...this.state} />
+                        <RatePannel />
+                    </div>
+
+                </div>
+                <Footer />
             </div>
         )
     }
