@@ -1,0 +1,243 @@
+.trading_chart_header {
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    /*align-items: center;*/
+}
+
+.trading_chart_realData {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.trading_chart_favor {
+    color: #0098FD;
+    cursor: pointer;
+}
+
+.trading_chart_symbols {
+    color: #fff;
+}
+
+.trading_chart {
+    position: relative;
+}
+
+.toggle_button {
+    position: absolute;
+    top:50%;
+    width: 20px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-family: Consolas;
+    font-weight: bolder;
+    transform: translateY(-50%);
+    color: #5D6F7C;
+    z-index: 999;
+    cursor: pointer;
+}
+
+.left_button_close {
+    left: 0;
+    transform: translate(0,-50%);
+    background-color: #2C3339;
+}
+
+.left_button_open {
+    left: 0;
+    transform: translate(-100%,-50%);
+    background-color: #22272B;
+}
+
+.right_button_close {
+    right: 0;
+    transform: translate(0,-50%);
+    background-color: #2C3339;
+}
+
+.right_button_open {
+    right: 0;
+    transform: translate(100%,-50%);
+    background-color: #22272B;
+}
+
+.tradeChartSpan{
+    display: inline-block;
+    padding: 0 5px;
+    height: 30px;
+    line-height: 30px;
+    color: #73838E;
+    background: #22272b;
+    font-size: 13px;
+    margin-right:2px;
+    cursor:pointer
+}
+.candlesUl{
+    position: absolute;
+    top: 45px;
+    left: 0;
+    color: #73838E;
+    line-height: 35px;
+    width: 128px;
+    background: #343E44;
+    z-index: 101;
+}
+.candlesUl>li{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding-left: 10px;
+}
+.candlesUl>li:hover{
+    background: #3399ff;
+    color: #ffffff;
+}
+.candlesUl .iconfont{
+    font-size: 30px;
+}
+
+.sketch-picker .flexbox-fix input{
+    height:30px;
+    width: 100%!important;
+}
+
+.sketch-picker .flexbox-fix span{
+    height: 20px;
+    line-height: 10px;
+}
+
+.minutesName {
+    font-size:14px;
+    text-align:center;
+    line-height:30px;
+    width:30px;
+    height:30px;
+    margin-right:2px;
+    position:relative;
+    cursor:pointer;
+}
+
+#drawBox {
+    position:absolute;
+    background-color:#2c3339;
+    top: 100px;
+    left: 10px;
+    width: 50px;
+    z-index: 99;
+    cursor:move;
+}
+
+#drawBox .iconfont{
+    font-size: 30px;
+    color:#73838E;
+}
+
+.draw-tool-list {
+    height:50px;
+    line-height:50px;
+    text-align:center;
+    border-bottom:1px solid #22272B;
+}
+
+#drawSettingBox {
+    height:50px;
+    line-height:50px;
+    background-color:#FFF;
+    color:#000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:99;
+    border-radius: 5px;
+    cursor: move;
+}
+
+#drawSettingBox .ant-select-selection--single {
+    height: 30px;
+    padding: 0;
+}
+
+.drawSettingBoxMain {
+    height: 50px;
+    line-height: 50px;
+    padding:0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.drawSettingBoxMain .fontSpan {
+    display:inline-block;
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    border:1px solid #ccc;
+    margin-right:10px;
+}
+
+.settingModal .ant-tabs{
+    overflow: inherit;
+}
+
+.settingWithChartTypeRow {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+
+.settingWithChartTypeCol {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.settingNameSpan {
+    width: 80px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.settingModal .ant-select-selection--single {
+    height: 30px;
+    padding: 0;
+}
+
+.resetChartBox {
+    margin-top: 20px;
+}
+
+.settingNameCheckSpan {
+    padding-left: 30px;
+}
+
+.waterMark {
+    width:100%;
+    height:100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.waterMark img{
+    position: absolute;
+    bottom: 50px;
+    left: 70px;
+}
+.autoComplete-darkness .ant-select-selection{
+    background: transparent;
+}
+.autoComplete-darkness .input-darkness .ant-input{
+    background: #353E45;
+    color: #6A7883;
+    border: none;
+}
+.autoComplete-darkness .input-darkness .ant-input-suffix .anticon-search{
+    color: #6A7883;
+}
+.autoComplete-option{
+    background: #1A1F22;
+    color: #6A7883;
+}

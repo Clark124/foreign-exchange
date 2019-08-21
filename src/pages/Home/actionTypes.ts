@@ -1,0 +1,1 @@
+export const FETCH_LIST_SUCCESS = 'fetch_list_success/home'

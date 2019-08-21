@@ -1,0 +1,82 @@
+
+/*@font-face {font-family: "iconfont";
+  src: url('../fonts/iconfont.ttf') format('truetype'), !* chrome, firefox, opera, Safari, Android, iOS 4.2+*!
+
+}*/
+@font-face {
+  font-family: 'iconfont';  /* project id 748563 */
+  src: url('//at.alicdn.com/t/font_748563_tf3v2tam6mp.eot');
+  src: url('//at.alicdn.com/t/font_748563_tf3v2tam6mp.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_748563_tf3v2tam6mp.woff') format('woff'),
+  url('//at.alicdn.com/t/font_748563_tf3v2tam6mp.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_748563_tf3v2tam6mp.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-favorite:before { content: "\e7a9"; }
+
+.icon-favorites:before { content: "\e7aa"; }
+
+.icon-left:before { content: "\e7ab"; }
+
+.icon-right:before { content: "\e7ac"; }
+
+.icon-arrow:before { content: "\e7ad"; }
+
+.icon-settings:before { content: "\e7ae"; }
+
+.icon-close:before { content: "\e7af"; }
+
+.icon-settings_small:before { content: "\e7b0"; }
+
+.icon-visible:before { content: "\e7b1"; }
+
+.icon-dropdown:before { content: "\e7b6"; }
+
+.icon-mai:before { content: "\e7b2"; }
+
+.icon-mai1:before { content: "\e7b3"; }
+
+.icon-buy:before { content: "\e7b4"; }
+
+.icon-sell:before { content: "\e7b5"; }
+
+.icon-area:before { content: "\e7b7"; }
+
+.icon-line:before { content: "\e7b8"; }
+
+.icon-candles:before { content: "\e7b9"; }
+
+.icon-down:before { content: "\e7ba"; }
+
+.icon-FibonacciRetracement:before { content: "\e7bb"; }
+
+.icon-EquidistantChannel:before { content: "\e7bc"; }
+
+.icon-GannFan:before { content: "\e7bd"; }
+
+.icon-InteractiveYCoordina:before { content: "\e7be"; }
+
+.icon-InteractiveText:before { content: "\e7bf"; }
+
+.icon-save:before { content: "\e7c0"; }
+
+.icon-TrendLine:before { content: "\e7c1"; }
+
+.icon-StandardDeviationCha:before { content: "\e7c2"; }
+
+.icon-alogscore:before { content: "\e7c3"; }
+
+.icon-del:before { content: "\e7c4"; }
+
+.icon-eraser:before { content: "\e7c5"; }
+
+.icon-cross:before { content: "\e7c6"; }
+
