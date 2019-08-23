@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import './index.less'
 import { RouteComponentProps } from 'react-router-dom'
-
+import { Select } from 'antd';
 import search_icon from '../../assets/images/search_icon.jpg'
 import logo from '../../assets/images/logo.jpg'
+
+const { Option } = Select;
 
 interface IState {
     tabIndex: number;
@@ -26,6 +28,11 @@ class Header extends Component<IProps> {
 
     onSearchStock: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         this.setState({searchText:e.target.value})
+    }
+
+     //切换
+     changeLanguage() {
+        console.log(this.props)
     }
 
     render() {
@@ -73,6 +80,11 @@ class Header extends Component<IProps> {
                         </div>
                         <span className="btn login">Sign in</span>
                         <span className="btn register">Sign up</span>
+                        <Select defaultValue="English" style={{ width: 100,marginLeft:20 }} onChange={this.changeLanguage.bind(this)}>
+                            <Option value={0}>English</Option>
+                            <Option value={1}>Chinese</Option>
+                            
+                        </Select>
                     </div>
                 </div>
             </div>
