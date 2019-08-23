@@ -8,7 +8,7 @@ import icon_clock from '../../assets/images/clock.png'
 
 import Header from '../../Components/Header'
 import Footer from '../../Components/Footer'
-import ChartList from './components/ChartList'
+// import ChartList from './components/ChartList'
 import RatePannel from './components/RatePannel'
 
 import './index.less'
@@ -23,8 +23,8 @@ interface IState {
     stockDate: any;
 
 }
-class Home extends Component<IProps>{
-    state: IState = {
+class Home extends Component<IProps,IState>{
+    state = {
         content: "",
         isChecked: false,
         number: 1,
@@ -73,8 +73,8 @@ class Home extends Component<IProps>{
                             </div>
                             <span className="more btn">MORE +</span>
                         </div>
-                        <ChartList {...this.state} />
-                        <RatePannel />
+                       
+                        <RatePannel {...this.props}/>
                     </div>
 
                 </div>

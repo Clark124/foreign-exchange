@@ -95,13 +95,19 @@ export function changeNumber(Array, tickSize) {
     let arr = []
 
     Array.forEach((item) => {
+        let date = ""
+        if (item[0].toString().length === 8) {
+            date = new Date(moment(item[0].toString(), 'YYYYMMDD').format('YYYY-MM-DD'))
+        } else if (item[0].toString().length === 12) {
+            date = new Date(moment(item[0].toString(), 'YYYYMMDDHHmm').format('YYYY-MM-DD HH:mm'))
+        }
         arr.push({
             close: +(item[4]).toFixed(tickSize),
-            high:+(item[2]).toFixed(tickSize),
-            low:+(item[3]).toFixed(tickSize),
-            open:+(item[1]).toFixed(tickSize),
-            date:new Date(moment(item[0],'YYYYMMDD').format('YYYY-MM-DD')),
-            volume:item[5]
+            high: +(item[2]).toFixed(tickSize),
+            low: +(item[3]).toFixed(tickSize),
+            open: +(item[1]).toFixed(tickSize),
+            date: date,
+            volume: item[5]
         })
 
     })

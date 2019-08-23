@@ -12,5 +12,17 @@ declare interface IStoreState {
     list: IList
 }
 
+//单个K线数据
+declare interface KLineData {
+    close: number;
+    high:number;
+    low: number;
+    open:number;
+    date: number;
+    volume: number;
+}
+
+//K线数据列
+declare type KLineDataList = KLineData[]
 
 

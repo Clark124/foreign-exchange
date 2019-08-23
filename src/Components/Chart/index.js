@@ -109,7 +109,7 @@ class CandleStickChartWithDarkTheme  extends React.Component {
 					xAccessor={xAccessor}
 					displayXAccessor={displayXAccessor}
 					xExtents={xExtents}>
-				{this.props.period === 1 ? <Chart id={0} yExtents={d => d.close} height={150}>
+				{this.props.period === 1 ? <Chart id={0} yExtents={d => d.close} height={200}>
 					<HoverTooltip
 						tooltipContent={tooltipContent([])}
 						fontSize={14}
@@ -153,7 +153,7 @@ class CandleStickChartWithDarkTheme  extends React.Component {
 					{/* 缩放按钮 */}
 					<ZoomButtons />
 				</Chart> }
-				<Chart id={2} yExtents={d => d.volume} height={60} origin={(w, h) => [0, h - 46]}>
+				<Chart id={2} yExtents={d => d.volume} height={80} origin={(w, h) => [0, h - 122]}>
 					{/*<YAxis axisAt="left" orient="left" ticks={5} tickFormat={format(".2s")}/>*/}
 					<BarSeries yAccessor={d => d.volume}
 							//    fill={d => d.close > d.open ? "#e85d5d" : "#72e890" }
