@@ -62,6 +62,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^4.3.4"
+    "@types/react-router-dom": "^4.3.4",
+    "@types/react-intl": "^2.2.0"
   }
 }

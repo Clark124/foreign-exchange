@@ -1,4 +1,8 @@
 ﻿const en_US = {
+    //
+    english:'English',
+    chinese:'Chinese',
+
     // 涨跌颜色
     upColor: '#2be594',
     downColor: '#ff6060',
@@ -10,6 +14,7 @@
     newsUrlType: 'newsapi',
 
     /*Header*/
+    Trade: 'Trade',
     trade: 'Trade',
     aiTrader: 'AI-Trader',
     MarketScanne: 'Market Scanner',

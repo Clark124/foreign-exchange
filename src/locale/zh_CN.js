@@ -1,4 +1,7 @@
 ﻿const zh_CN = {
+     //
+     english:'英文',
+     chinese:'中文',    
     // 涨跌颜色
     upColor:'#ff6060',
     downColor:'#2be594',
@@ -10,7 +13,10 @@
     newsUrlType:'CoinDogApi',
 
     /*Header*/
+    Trade:'交易',
     trade:'交易',
+    'Al-trade':'策略交易',
+    Help:'帮助',
     aiTrader:'智能交易',
     MarketScanne:'市场扫描',
     Arbitrage:'套利',

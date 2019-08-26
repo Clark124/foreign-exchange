@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import TradeRoomChart from '../../Components/traderoomchart/traderoomchart'
 import { getQuote, getKline } from '../../service/serivce'
 import { changeNumber } from '../../utils/utils'
+import Header from '../../Components/Header/index'
 
 import './index.less'
 
@@ -72,6 +73,7 @@ class StockChart extends Component<IProps>{
 
         return (
             <div className="home">
+                <Header {...this.props}/>
                 <div className="number">{this.state.number}</div>
                 <div className="username">
                     <span>哈哈哈哈</span>

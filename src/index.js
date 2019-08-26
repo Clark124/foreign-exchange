@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './assets/css/iconfont.css';
@@ -30,10 +30,9 @@ class LocaleIndex extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            locale: navigator.language.split('_')[0],
-            messages: messages[navigator.language],
+            locale: 'en',
+            messages: en_US,
         };
-        this.changeLanguage = this.changeLanguage.bind(this);
     }
     getChildContext() {
         return {
@@ -42,23 +41,11 @@ class LocaleIndex extends Component {
             },
         };
     }
-    render() {
-        return (
-            <IntlProvider
-                locale={this.state.locale}
-                messages={this.state.messages}>
-                <ConfigProvider locale={zhCN}>
-                    <Provider store={store}>
-                        <App />
-                    </Provider>
-                </ConfigProvider>
-            </IntlProvider>
-        );
-    }
-
-    componentDidMount() {
-        // let language = sessionStorage.getItem('language') ? sessionStorage.getItem('language') : navigator.language;
-        this.changeLanguage('en-US');
+    UNSAFE_componentWillMount() {
+        const language = localStorage.getItem("language")
+        if(language){
+            this.changeLanguage(language)
+        }
     }
     changeLanguage(language) {
         switch (language) {
@@ -88,6 +75,21 @@ class LocaleIndex extends Component {
                 break;
         }
     }
+    render() {
+        return (
+            <IntlProvider
+                locale={this.state.locale}
+                messages={this.state.messages}
+            >
+
+                <ConfigProvider locale={zhCN}>
+                    <Provider store={store}>
+                        <App />
+                    </Provider>
+                </ConfigProvider>
+            </IntlProvider>
+        );
+    }
 }
 
 LocaleIndex.childContextTypes = {
@@ -95,7 +97,7 @@ LocaleIndex.childContextTypes = {
 };
 
 ReactDOM.render(
-    <LocaleIndex/>,
+    <LocaleIndex />,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
