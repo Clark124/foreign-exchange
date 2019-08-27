@@ -32,7 +32,7 @@ import Bundle from './bundle';
 // }
 
 //stockchart
-const StockChart= (props) => (
+const StockChart = (props) => (
     <Bundle load={() => import('../pages/StockChartTest/index')}>
         {(StockComponent) => <StockComponent {...props} />}
     </Bundle>
@@ -46,10 +46,18 @@ const Home = (props) => (
     </Bundle>
 )
 
+//交易室
+const TradeRoom = (props) => (
+    <Bundle load={() => import('../pages/TradeRoom/index')}>
+        {(TradeRoomComponent) => <TradeRoomComponent {...props} />}
+    </Bundle>
+)
+
 
 
 const routerMap = [
     { path: '/', component: Home, exact: true },
+    { path: '/tradeRoom', component: TradeRoom, exact: true },
     { path: '/stockchart', component: StockChart, exact: true },
 ]
 

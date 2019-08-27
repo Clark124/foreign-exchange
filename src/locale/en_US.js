@@ -118,6 +118,7 @@
     keyNotEmpty: 'The key cannot be empty',
 
     /*footer*/
+    'relatedLinks':'Related links',
     // About
     AboutLinkUrl: 'https://www.bitstation.co/en/index.html',
     ResourcesLinkUrl: '/en/Whitepaper.pdf',

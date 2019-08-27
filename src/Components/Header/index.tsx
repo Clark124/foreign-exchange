@@ -17,7 +17,11 @@ interface IState {
     language: string;
 }
 
-type IProps = RouteComponentProps & InjectedIntlProps
+interface Props {
+    trade?:boolean
+}
+
+type IProps = RouteComponentProps & InjectedIntlProps & Props
 
 class Header extends Component<IProps> {
     state: IState = {
@@ -57,18 +61,14 @@ class Header extends Component<IProps> {
         }
         localStorage.setItem('language', value)
         this.context.changeLanguage(value)
-
-        // this.setState({ language: e })
-
-
-
     }
 
     render() {
         const { tabList, tabIndex, searchText, language } = this.state
+        const {trade} = this.props
         return (
             <div className="header-wrapper">
-                <div className="header-content container">
+                <div className={trade?"header-content trade":"header-content container"}  >
                     <div className="left">
                         <img src={logo} alt="" />
                         <span className="logo-text btn">Forex Trading Platform</span>

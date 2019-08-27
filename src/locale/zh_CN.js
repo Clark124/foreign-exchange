@@ -1,7 +1,7 @@
 ﻿const zh_CN = {
      //
-     english:'英文',
-     chinese:'中文',    
+    english:'英文',
+    chinese:'中文',    
     // 涨跌颜色
     upColor:'#ff6060',
     downColor:'#2be594',
@@ -118,6 +118,7 @@
     keyNotEmpty:'秘钥不能为空',
 
     /*footer*/
+    'relatedLinks':'相关链接',
     // About
     AboutLinkUrl:'https://www.bitstation.co/zh/index.html',
     ResourcesLinkUrl:'/zh/Whitepaper.pdf',

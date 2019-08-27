@@ -280,7 +280,7 @@ class TradeRoomChart extends Component {
         return (
            
             <div style={{ display: 'flex' }}>
-                <div style={{ flex: 1, position: 'relative', background: '#282D33' }}>
+                <div style={{ wdith:width, position: 'relative', background: '#282D33' }}>
                     <div className="trading_chart_header" style={{ flexDirection: width > 600 ? 'row' : 'column', alignItems: width > 600 ? 'center' : 'flex-start', padding: ' 0 10px' }}>
                         <div className="trading_chart_realData">
                             {this.props.isIntelliScript !== undefined && this.props.isIntelliScript === true && <div className="autoComplete-darkness"><AutoComplete dataSource={this.state.stockListOption} onSelect={this.handleSelectStock} onSearch={this.handleSearchStock}><Input suffix={<Icon type="search" theme="outlined" />} className="input-darkness" /></AutoComplete></div>}
