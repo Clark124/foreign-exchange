@@ -26,12 +26,10 @@ const minuteData = [
 
 
 interface IState {
-
     quote: any;
     stockDate: any;
-
 }
-type Iprops = RouteComponentProps
+type Iprops = RouteComponentProps<{ id: string }>
 
 class TradeRoom extends Component<Iprops> {
     state: IState = {
@@ -39,8 +37,9 @@ class TradeRoom extends Component<Iprops> {
         stockDate: [],
     }
     UNSAFE_componentWillMount() {
-        this.onGetQuote('000001.SS')
-        this.onGetKline('000001.SS', 6)
+        const id = this.props.match.params.id
+        this.onGetQuote(id)
+        this.onGetKline(id, 6)
     }
     //股票行情数据
     onGetQuote(code: string) {
@@ -56,11 +55,14 @@ class TradeRoom extends Component<Iprops> {
             this.setState({ stockDate: data })
         })
     }
-    periodCallback() {
-
+    //切换周期
+    periodCallback(e: { title: string, value: string, period: number }) {
+        const id = this.props.match.params.id
+        this.onGetKline(id, e.period)
     }
     render() {
         const { quote, stockDate } = this.state
+        const code = this.props.match.params.id
         return (
             <div className="trade-room-wrapper">
                 <Header {...this.props} trade={true} />
@@ -69,12 +71,12 @@ class TradeRoom extends Component<Iprops> {
                     <TradeRoomChart
                         data={stockDate}
                         width={800}
-                        height={600}
+                        height={680}
                         minuteData={minuteData}  //可根据股票或者外汇来设定
                         periodCallback={this.periodCallback.bind(this)} //周期回调
                         quote={quote}
                     />
-                    <Operate/>
+                    <Operate quote={quote} code={code}/>
                 </div>
                 <Footer />
             </div>

@@ -75,20 +75,16 @@ export function get(url, data) {
     })
 }
 
-//url拼接
-// function stringifyURL(params, postFlag) {
-//     var paramUrl = '';
-//     for (var key in params) {
-//         if (!postFlag && paramUrl === '') {
-//             paramUrl += '?' + key + '=' + encodeURIComponent(params[key]);
-//         }
-//         else {
-//             paramUrl += '&' + key + '=' + encodeURIComponent(params[key]);
-//         }
-//     }
-//     //console.log(paramUrl);
-//     return paramUrl;
-// }
+export const getAddToken = (url, data, token) => {
+    return new Promise((resolve, reject) => {
+      axios.get(url, { params: data, headers: { 'token': token } }).then(res => {
+        resolve(res.data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  }
+
 
 /*k线数据格式化成图形需要的格式*/
 export function changeNumber(Array, tickSize) {
@@ -113,36 +109,7 @@ export function changeNumber(Array, tickSize) {
     })
     return arr
 }
-/*k线数据格式化成图形需要的格式*/
-// export function conversionNum(Array, symbols) {
-//     if (!symbols) {
-//         return;
-//     }
-//     var symbolArray = symbols, newArray = []
-//     // var symbolArray=symbols.split(','),newArray=[];
-//     if (symbols.indexOf(',') > -1) {
-//         symbolArray = symbols.split(',')
-//     }
 
-//     for (var key in Array) {
-//         if (symbolArray.indexOf(key) > -1) {
-//             newArray = []
-//             let tickSize = TICK_SIZE[key];
-//             Array[key].forEach((item) => {
-//                 newArray.push({
-//                     close: +(item.close).toFixed(tickSize),
-//                     high: +(item.max).toFixed(tickSize),
-//                     low: +(item.min).toFixed(tickSize),
-//                     open: +(item.open).toFixed(tickSize),
-//                     date: new Date(item.timestamp),
-//                     volume: item.volume
-//                 })
-//             })
-//             Array[key] = newArray;
-//         }
-//     }
-//     return Array
-// }
 /*字符带/请求*/
 export function tick_code(name) {
     return new Promise((resolve, reject) => {
@@ -355,23 +322,5 @@ export function getDecodeString(encodeString) {
     return realkeyString;
 
 }
-
-//把url参数改成对象形式
-// export function readUrlToParams(url) {
-//     // var url = location.href;
-//     var nameValue;
-//     var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
-//     var paraObj = {};
-//     for (var i = 0; nameValue = paraString[i]; i++) {
-//         var name = nameValue.substring(0, nameValue.indexOf("=")).toLowerCase();
-//         var value = nameValue.substring(nameValue.indexOf("=") + 1, nameValue.length);
-//         if (value.indexOf("#") > -1) {
-//             value = value.split("#")[0];
-//         }
-//         paraObj[name] = value;
-//     }
-//     return paraObj;
-// };
-
 
 export let log = console.log.bind(console);

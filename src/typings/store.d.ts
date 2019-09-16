@@ -25,4 +25,13 @@ declare interface KLineData {
 //K线数据列
 declare type KLineDataList = KLineData[]
 
+//行情数据
+declare interface Quote{
+    px_change:number;
+    px_change_rate:number;
+    last_px:number;
+    bid_grp?:string;
+    offer_grp:string;
+}
+
 

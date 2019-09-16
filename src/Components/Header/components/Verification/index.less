@@ -1,0 +1,54 @@
+.verificate-wrapper {
+    position  : fixed;
+    z-index   : 9;
+    top       : 0;
+    left      : 0;
+    bottom    : 0;
+    right     : 0;
+    background: rgba(0, 0, 0, 0.5);
+
+    .verificate {
+        position     : absolute;
+        left         : 50%;
+        top          : 50%;
+        transform    : translate(-50%, -50%);
+        width        : 523px;
+        height       : 400px;
+        box-sizing   : border-box;
+        background   : #fff;
+        border-radius: 10px;
+        padding: 40px 50px;
+        >.title{
+            text-align: center;
+            box-sizing: border-box;
+            font-size: 24px;
+            color: #353E45;
+            font-weight: bold;
+            margin-bottom: 70px;
+        }
+        .icon-cancel{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            &:active{
+                opacity: 0.5;
+            }
+        }
+        >.text-info{
+            font-size: 16px;
+            color: #353E45;
+            line-height: 1.8;
+        }
+        >.send{
+            text-align: center;
+            height: 46px;
+            line-height: 46px;
+            color: #fff;
+            font-size: 18px;
+            background: #3399FF;
+            margin-top: 60px;
+        }
+    }
+
+}

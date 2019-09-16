@@ -7,10 +7,9 @@
     downColor:'#2be594',
     fontFamily:'Microsoft YaHei',
 
-    /*News*/
-    Bitstation:'首页',
-    LatestNews:'最新新闻',
-    newsUrlType:'CoinDogApi',
+    //register
+    createAccount: '注册账号',
+    confirmPassword:'确认',
 
     /*Header*/
     Trade:'交易',
@@ -22,21 +21,20 @@
     Arbitrage:'套利',
     Community:'社区',
     help:'帮助',
-    Signin:'登录',
-    Register:'注册',
+    signin:'登录',
+    register:'注册',
     Search:'搜索',
-    setting:'设置',
-    logout:'退出',
+   
     strategyBuilder: '搭建策略',
     intelliScript: '编写策略',
     MyStrategies: '我的策略',
     strategyList: '策略排行',
+    setting: '设置',
 
     /*登录*/
     email:'邮箱',
     password:'密码',
     forgotpw:'忘记密码',
-    createAccount:'创建新帐户',
     existingAccount:'已有账号',
     readServer:'我阅读并同意',
     termService:'服务条款',

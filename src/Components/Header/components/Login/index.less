@@ -1,0 +1,97 @@
+.login-wrapper {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  .login {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 523px;
+    height: 520px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+    .title {
+      margin-top: 40px;
+      font-size: 28px;
+      color: #333;
+      font-weight: bold;
+    }
+    .icon-cancel{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        &:active{
+            opacity: 0.5;
+        }
+    }
+    .input-wrapper{
+        width: 325px;
+        margin: 0 auto;
+        margin-top: 30px;
+        .text-title{
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #353E45;
+        }
+        .check-box{
+            text-align: left;
+            color: #353E45;
+        }
+        .phone{
+            width: 100%;
+            height: 41px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+        .password{
+            width: 100%;
+            height: 41px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+        .login-btn{
+            width: 100%;
+            height: 41px;
+            background-color: #2a89ff;
+            margin-top: 50px;
+            text-align: center;
+            line-height: 41px;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            &:active{
+                opacity: 0.5;
+            }
+        }
+        .footer{
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 20px;
+            .forgot,.to-register{
+                color: #3399FF;
+                cursor: pointer;
+                &:active{
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+   
+  }
+}

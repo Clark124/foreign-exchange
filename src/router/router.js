@@ -53,12 +53,20 @@ const TradeRoom = (props) => (
     </Bundle>
 )
 
+//ai-trade
+const AiTrade = (props) => (
+    <Bundle load={() => import('../pages/AiTrade/index')}>
+        {(AiTradeComponent) => <AiTradeComponent {...props} />}
+    </Bundle>
+)
+
 
 
 const routerMap = [
     { path: '/', component: Home, exact: true },
-    { path: '/tradeRoom', component: TradeRoom, exact: true },
+    { path: '/tradeRoom/:id', component: TradeRoom, exact: true },
     { path: '/stockchart', component: StockChart, exact: true },
+    { path: '/aiTrade', component: AiTrade, exact: false },
 ]
 
 

@@ -1,213 +1,46 @@
-import { get,postData,deleteData ,putData} from '../utils/utils'
+import { get,postData,} from '../utils/utils'
 
-// const host2 = 'http://localhost:80'
-// const host2 = 'http://192.168.0.101:80'
-const host2 = 'http://xuangu.pushutech.com'
-// const host = 'http://localhost:8001'
-// const host = 'http://192.168.0.101:8001';
-const host = 'http://xuangu.pushutech.com:8001';
-const host1 = 'http://xuangu.pushutech.com'
+
+// const host = 'http://192.168.0.149';
+const host = 'http://forex.pushutech.com'
 const ezquant = 'http://www.ezquant.cn'
 const market = 'http://real.pushutech.com'
 
-//我的股票池列表
-export function getMyStockPool(data) {
-    return get(host + '/comboselectstock/selectStock/listMyPoolsName/' + data.id)
-}
 
 
-//股票池内所有股票
-export function getPoolStock(data) {
-    return get(host + '/comboselectstock/selectStock/listStartSelectStock', data)
-}
-//选择股票值下一步
-export function selectStockNext(data){
-    return get(host + '/comboselectstock/selectStock/next', data)
-}
-
-//获取股票行情
-export function getStockData(data) {
-    return get(market + '/quote/real', data)
-}
-
-//选股指标-一级
-export function stockIndicate(data) {
-    return get(host1 + '/listAllType', data)
-}
-
-//选股指标-二级
-export function stockIndicateList(data) {
-    return get(host1 + '/listFinancialParameterByTypeId/0', data)
-}
-
-//指定市场列表
-export function assignMarket(data) {
-    return get(host1 + '/listSelectMarket', data)
-}
-
-//行业市场列表
-export function industryMarket(data) {
-    return get(host1 + '/listAllIndustryType', data)
-}
-
-//概念板块列表
-export function conceptBlock(data) {
-    return get(host1 + '/listAllConceptType', data)
-}
-
-//地区板块列表
-export function regionBlock(data) {
-    return get(host1 + '/listAllRegionalType', data)
-}
-
-//开始选股
-export function beginSelect(data) {
-    return get(host + '/comboselectstock/selectStock/listStartSelectStock', data)
-}
-
-//保存选股条件
-export function saveSelectStock(data){
-    return postData(host2 + '/saveMyConditon', data)
-}
-//更新选股条件
-export function updateSelectStock(data){
-    return putData(host2 + '/updateMyConditon', data)
-}
-//选股条件列表
-export function selectStockList(data){
-    return get(host2+'/listMySelectStockConditon',data)
-}
-//删除条件选股
-export function deleteSelectStock(data){
-    return deleteData(host2+'/deleteSelectStockCondition/'+data.id)
-}
-//托管选股条件
-export function deploySelectStock(data){
-    return putData(host2+'/uploadSelectStockWebCloud/'+data.id)
-}
-//取消托管选股条件
-export function canceldeploySelectStock(data){
-    return putData(host2+'/cancelUploadSelectStockWebCloud/'+data.id)
-}
-
-//一级优先买入条件
-export function oneLevelCondition(data) {
-    return get(host + '/comboselectstock/tradeSetting/onePriorityCondition')
-}
-
-//二级优先买入条件
-export function twoLevelCondition(data) {
-    return get(host + '/comboselectstock/tradeSetting/twoPriorityCondition')
-}
-
-//策略列表
-export function strategyList(data) {
-    return get(host + '/comboselectstock/tradeSetting/listUserStrategy/' + data.id)
-}
-
-//提交交易设置
-export function submitTradeSet(data) {
-    return get(host + '/comboselectstock/tradeSetting/next', data)
-}
-
-//大盘择时
-//获取指标数
-export function getIndicateList(data) {
-    return get(host + '/comboselectstock/selectTime/listAllIndicator')
-}
-
-//获取指标数对应的合约
-export function indicateStockList(data){
-    return get(host + '/comboselectstock/selectTime/listIndicatorStock')
-}
-
-export function submitSelectTime(data){
-    return get(host + '/comboselectstock/selectTime/next', data)
-}
-
-export function submitRiskSet(data){
-    return get(host + '/comboselectstock/risksetting/next', data)
-}
-
-
-//组合列表
-export function compostList(data){
-    return get(host + '/comboselectstock/comboInfo/listComboxListInfo', data)
-}
-
-//今日收益排名
-export function todayProfit(data){
-    return get(host + '/comboselectstock/comboInfo/listTodayYieldRate', data)
-}
-
-//当月收益排名
-export function monthProfit(data){
-    return get(host + '/comboselectstock/comboInfo/listMonthYieldRate', data)
-}
-
-//组合详情
-export function composeDetail(data){
-    return get(host + '/comboselectstock/comboInfo/getComboxDetailInfo/'+data.id)
-}
-
-
-//我的组合
-export function myCompose(data){
-    return get(host + '/comboselectstock/comboInfo/listMyComboInfo/'+data.id)
-}
-
-//删除组合
-export function deleteCompose(data){
-    return get(host + '/comboselectstock/comboInfo/deleteComboInfo/'+data.id)
-}
-
-//公开关闭组合 
-export function publishCompose(data){
-    return get(host + '/comboselectstock/comboInfo/'+data.id+'/'+data.type)
-}
-
-//编辑组合
-export function editCompose(data){
-    return get(host + '/comboselectstock/comboInfo/editComboInfo/'+data.id)
-}
-
-//编辑更新一
-export function editStep1(data){
-    return get(host + '/comboselectstock/selectStock/update/next',data)
-}
-
-//编辑更新-交易设置
-export function editStep2(data){
-    return get(host + '/comboselectstock/tradeSetting/update/next',data)
-}
-
-//编辑更新-大盘择时
-export function editStep3(data){
-    return get(host + '/comboselectstock/selectTime/update/next',data)
-}
-//编辑更新-风控设置
-export function editStep4(data){
-    return get(host + '/comboselectstock/risksetting/update/next',data)
-}
-
-//开始回撤
-export function testBack(data){
-    return get(host + '/comboselectstock/risksetting/testStrategy',data)
-}
-
-
-
-//老版易量化接口
 //搜索股票
 export function searchStcok(data){
-    return get(ezquant + '/quote/wizard',data)
+    return get(host + '/real/wizard',data)
 }
+
+//获取股票K线图数据
+export function getKline(data){
+    return postData(market + '/quote/internal/kline',data)
+}
+
+
+//注册
+export function register(data){
+    return get(host + '/register/email',data)
+}
+
+//发送激活
+export function sendActiveEamil(data){
+    return get(host + '/register/send/active/mail',data)
+}
+
+
+
+//首页
+//获取首页列表
+export function homeList(data){
+    return get(host + '/real/list',data)
+}
+
+
 //登录
 export function login(data){
     return get(ezquant + '/login',data)
-}
-export function register(data){
-    return get(ezquant + '/phone/register/sms',data)
 }
 //找回密码
 export function findPassword(data){
@@ -235,10 +68,7 @@ export function getCode(data){
 
 
 //交易室
-//获取股票K线图数据
-export function getKline(data){
-    return postData(ezquant + '/quote/internal/kline',data)
-}
+
 //股票K线图最后一根K线数据
 export function getLastKline(data){
     return postData(ezquant + '/quote/internal/lastkline',data)

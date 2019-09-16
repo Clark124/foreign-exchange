@@ -11,10 +11,19 @@ interface IState {
     tabList: string[];
 }
 
-class ModuleTrade extends Component {
+interface props {
+    quote:Quote;
+    code:string;
+}
+
+type Iprops = props
+
+class ModuleTrade extends Component<Iprops> {
     state: IState = {
         tabIndex: 0,
         tabList: ['Trade', 'Cancel', 'Hold Position', 'Order History']
+    }
+    UNSAFE_componentWillMount(){
     }
     changeAccount() {
 
@@ -24,6 +33,7 @@ class ModuleTrade extends Component {
     }
     render() {
         const { tabIndex, tabList } = this.state
+        const {quote,code} = this.props
         return (
             <div className="module-trade">
                 <div className="account">
@@ -45,7 +55,7 @@ class ModuleTrade extends Component {
                             )
                         })}
                     </div>
-                    <Trade />
+                    <Trade quote={quote} code={code}/>
                 </div>
             </div>
         )

@@ -264,7 +264,7 @@ class TradeRoomChart extends Component {
             top: 10,
             bottom: 30
         };
-        let { intl, minuteData ,quote} = this.props;
+        let { intl, minuteData, quote } = this.props;
         let upColor = intl.formatMessage({ id: 'upColor', defaultMessage: '#2be594' });
         let downColor = intl.formatMessage({ id: 'downColor', defaultMessage: '#ff6060' });
         let chartType = intl.formatMessage({ id: 'chartType', defaultMessage: 'chartType' });
@@ -278,9 +278,9 @@ class TradeRoomChart extends Component {
         let change = intl.formatMessage({ id: 'Indexchange', defaultMessage: 'change' });
 
         return (
-           
+
             <div style={{ display: 'flex' }}>
-                <div style={{ wdith:width, position: 'relative', background: '#282D33' }}>
+                <div style={{ wdith: width, position: 'relative', background: '#282D33' }}>
                     <div className="trading_chart_header" style={{ flexDirection: width > 600 ? 'row' : 'column', alignItems: width > 600 ? 'center' : 'flex-start', padding: ' 0 10px' }}>
                         <div className="trading_chart_realData">
                             {this.props.isIntelliScript !== undefined && this.props.isIntelliScript === true && <div className="autoComplete-darkness"><AutoComplete dataSource={this.state.stockListOption} onSelect={this.handleSelectStock} onSearch={this.handleSearchStock}><Input suffix={<Icon type="search" theme="outlined" />} className="input-darkness" /></AutoComplete></div>}
@@ -296,13 +296,13 @@ class TradeRoomChart extends Component {
                                 }
                             </Tooltip>*/}
                             <Tooltip placement="topRight" title={symbol}>
-                                <span className="trading_chart_symbols">{quote.prod_name}({quote.prod_code})</span>
+                                <span className="trading_chart_symbols">{quote.prod_code}({quote.prod_name})</span>
                             </Tooltip>
                             <Tooltip placement="topRight" title={last}>
-                                <span style={{ color: quote.px_change_rate >= 0 ? upColor : downColor, padding: '0 10px' }}>{quote.last_px?quote.last_px.toFixed(2):'--'}</span>
+                                <span style={{ color: quote.px_change_rate >= 0 ? upColor : downColor, padding: '0 10px' }}>{quote.last_px ? quote.last_px.toFixed(2) : '--'}</span>
                             </Tooltip>
                             <Tooltip placement="topRight" title={change}>
-                                <span style={{ color: quote.px_change_rate >= 0 ? upColor : downColor }}>{quote.px_change_rate?quote.px_change_rate.toFixed(2):'--'}%</span>
+                                <span style={{ color: quote.px_change_rate >= 0 ? upColor : downColor }}>{quote.px_change_rate ? quote.px_change_rate.toFixed(2) : '--'}%</span>
                             </Tooltip>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -360,7 +360,7 @@ class TradeRoomChart extends Component {
                                 }}
                                 onClick={() => this.setState({ toggleIndicatorBox: !this.state.toggleIndicatorBox, showCandles: false })}>
                                 <Tooltip placement="topRight" title={AddIndicator}>
-                                    添加指标
+                                    <FormattedMessage defaultMessage="Add Indicator" id={'AddIndicator'} />
                                 </Tooltip>
                                 {this.state.toggleIndicatorBox ?
                                     <div>
@@ -386,7 +386,7 @@ class TradeRoomChart extends Component {
                                 onClick={() => this.setState({ toggleDrawBox: !this.state.toggleDrawBox })}
                             >
                                 <Tooltip placement="topRight" title={draw}>
-                                    绘图
+                                    <FormattedMessage defaultMessage="Draw" id={'draw'} />
                                 </Tooltip>
                             </span>
                             <div style={{ background: '#22272b', width: 30, height: 30, marginRight: 2, position: 'relative', cursor: 'pointer' }} >
@@ -2422,7 +2422,7 @@ class TradeRoomChart extends Component {
                                 onClick={() => { this.changeDrawInteractiveOptions('del') }}></i>
                         </div>
                     );
-                    
+
                 case "FibonacciRetracement":
                     return (
                         <div className="drawSettingBoxMain">
@@ -2462,7 +2462,7 @@ class TradeRoomChart extends Component {
                                 onClick={() => { this.changeDrawInteractiveOptions('del') }}></i>
                         </div>
                     );
-                 
+
                 case "EquidistantChannel":
                     return (
                         <div className="drawSettingBoxMain">
@@ -2496,7 +2496,7 @@ class TradeRoomChart extends Component {
                                 onClick={() => { this.changeDrawInteractiveOptions('del') }}></i>
                         </div>
                     );
-                
+
                 case 'StandardDeviationChannel':
                     return (
                         <div className="drawSettingBoxMain">
@@ -2530,7 +2530,7 @@ class TradeRoomChart extends Component {
                                 onClick={() => { this.changeDrawInteractiveOptions('del') }}></i>
                         </div>
                     );
-                   
+
                 case 'GannFan':
                     return (
                         <div className="drawSettingBoxMain">
@@ -2556,7 +2556,7 @@ class TradeRoomChart extends Component {
                                 onClick={() => { this.changeDrawInteractiveOptions('del') }}></i>
                         </div>
                     );
-                  
+
                 case 'InteractiveText':
                     return (
                         <div className="drawSettingBoxMain">
@@ -2607,7 +2607,7 @@ class TradeRoomChart extends Component {
                                 onClick={() => { this.changeDrawInteractiveOptions('del') }}></i>
                         </div>
                     );
-                   
+
                 case 'InteractiveYCoordinate':
                     return (
                         <div className="drawSettingBoxMain">
@@ -2637,7 +2637,7 @@ class TradeRoomChart extends Component {
                                 onClick={() => { this.changeDrawInteractiveOptions('del') }}></i>
                         </div>
                     );
-                  
+
 
                 default:
                     break;

@@ -8,6 +8,10 @@
     downColor: '#ff6060',
     fontFamily: 'Trebuchet MS,Tahoma,Microsoft YaHei,sans-serif',
 
+    //register
+    createAccount: 'Create A New Account',
+    confirmPassword:'Confirm',
+
     /*News*/
     Bitstation: 'Bitstation',
     LatestNews: 'Latest News',
@@ -21,8 +25,8 @@
     Arbitrage: 'Arbitrage',
     Community: 'Community',
     help: 'Help',
-    Signin: 'Sign In',
-    Register: 'Register',
+    signin: 'Sign In',
+    register: 'Sign Up',
     Search: 'Search',
     setting: 'Settings',
     logout: 'Logout',
@@ -36,7 +40,6 @@
     email: 'Email',
     password: 'Password',
     forgotpw: 'Forgot Password',
-    createAccount: 'Create A New Account',
     existingAccount: 'Existing Account',
     readServer: 'I read and agree to the',
     termService: 'Term of Service',
