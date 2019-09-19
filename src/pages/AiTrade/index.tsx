@@ -15,12 +15,13 @@ export default class AiTrade extends Component<IProps>{
         return (
             <div className="ai-trade">
                 <Header {...this.props} />
-                <div className="container">
-                    <Switch>
-                        <Route exact path="/aiTrade/build" component={Build} />
-                     
-                    </Switch>
-                </div>
+
+                <Switch>
+                    <Route exact path="/aiTrade/build" component={Build} />
+                    <Route exact path="/aiTrade/intelli" component={Build} />
+
+                </Switch>
+
                 <Footer />
             </div>
         )

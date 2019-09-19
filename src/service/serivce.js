@@ -1,8 +1,8 @@
 import { get,postData,} from '../utils/utils'
 
 
-// const host = 'http://192.168.0.149';
-const host = 'http://forex.pushutech.com'
+const host = 'http://192.168.0.149';
+// const host = 'http://forex.pushutech.com'
 const ezquant = 'http://www.ezquant.cn'
 const market = 'http://real.pushutech.com'
 
@@ -18,6 +18,11 @@ export function getKline(data){
     return postData(market + '/quote/internal/kline',data)
 }
 
+//获取股票K线图（可控制数量）
+export function getCountKline(data){
+    return get(market + '/quote/kline/data',data)
+}
+
 
 //注册
 export function register(data){
@@ -28,6 +33,10 @@ export function register(data){
 export function sendActiveEamil(data){
     return get(host + '/register/send/active/mail',data)
 }
+//登录
+export function login(data){
+    return get(host + '/login/post',data)
+}
 
 
 
@@ -36,12 +45,13 @@ export function sendActiveEamil(data){
 export function homeList(data){
     return get(host + '/real/list',data)
 }
-
-
-//登录
-export function login(data){
-    return get(ezquant + '/login',data)
+//行情数据
+export function quoteReal(data){
+    return get(market + '/quote/real',data)
 }
+
+
+
 //找回密码
 export function findPassword(data){
     return get(ezquant + '/password/update',data)

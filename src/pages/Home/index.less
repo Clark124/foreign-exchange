@@ -1,9 +1,48 @@
 .home {
+    .pagination-wrapper{
+        text-align: center;
+    }
+    .ant-table-row {
+        td {
+            vertical-align: middle;
+            color         : #111;
+        }
+
+        .currency {
+            cursor: pointer;
+
+            &:active {
+                opacity: 0.5;
+            }
+        }
+
+        .lastest-price {
+            color      : #E43737;
+            font-weight: bold;
+        }
+
+        .chg,
+        .price-change {
+            color: #E43737;
+
+            &.green {
+                color: #1DA407;
+            }
+        }
+
+    }
+
+    .ant-table-pagination.ant-pagination {
+        text-align: center;
+        float     : none;
+    }
+
     .main {
-        background : rgb(247, 247, 247);
-        min-height : 500px;
-        padding-top: 50px;
+        background    : rgb(247, 247, 247);
+        min-height    : 500px;
+        padding-top   : 50px;
         padding-bottom: 100px;
+
         .tips {
             display        : flex;
             align-items    : center;
@@ -31,7 +70,7 @@
         }
 
         .chart-list {
-            min-height: 400px;
+            min-height   : 400px;
             margin-bottom: 25px;
             box-sizing   : border-box;
             background   : #fff;
@@ -55,7 +94,7 @@
                     justify-content: space-between;
                     height         : 60px;
                     background     : #22272B;
-                    padding        : 0 10px;
+                    padding        : 0 30px;
                     font-size      : 16px;
 
                     .name {
@@ -84,60 +123,74 @@
                 }
             }
         }
-        .tab-pane{
+
+        .tab-pane {
             margin-top: 30px;
-            .table-wrapper{
-                width: 100%;
+
+            .table-wrapper {
+                width  : 100%;
                 padding: 10px;
-                .view-mode{
-                    height: 50px;
-                    display: flex;
-                    align-items: center;
+
+                .view-mode {
+                    height       : 50px;
+                    display      : flex;
+                    align-items  : center;
                     border-bottom: 1px solid #eee;
                     margin-bottom: 18px;
-                    .text{
-                        color: #333;
-                        font-size: 16px;
+
+                    .text {
+                        color       : #333;
+                        font-size   : 16px;
                         padding-left: 20px;
                         margin-right: 20px;
                     }
                 }
-                .table{
-                    width: 100%;
+
+                .table {
+                    width     : 100%;
                     min-height: 400px;
-                    .table-header{
-                        width: 100%;
-                        display: flex;
-                        height: 39px;
+
+                    .table-header {
+                        width      : 100%;
+                        display    : flex;
+                        height     : 39px;
                         align-items: center;
-                        background:rgba(249,249,249,1);
-                        >td{
-                            flex: 1;
+                        background : rgba(249, 249, 249, 1);
+
+                        >td {
+                            flex      : 1;
                             text-align: center;
-                            font-size: 14px;
-                            color: #666;
+                            font-size : 14px;
+                            color     : #666;
                         }
                     }
-                    .table-item{
-                        width: 100%;
-                        display: flex;
+
+                    .table-item {
+                        width      : 100%;
+                        display    : flex;
                         align-items: center;
-                        padding: 10px 0;
-                        >td{
-                            flex: 1;
+                        padding    : 10px 0;
+
+                        >td {
+                            flex      : 1;
                             text-align: center;
-                            font-size: 16px;
-                            color: #111;
-                            &.name{
+                            font-size : 16px;
+                            color     : #111;
+
+                            &.name {
                                 color: #111;
                             }
-                            &.lastest-price{
-                                color: #E43737;
+
+                            &.lastest-price {
+                                color      : #E43737;
                                 font-weight: bold;
                             }
-                            &.chg,&.price-change{
+
+                            &.chg,
+                            &.price-change {
                                 color: #E43737;
-                                &.green{
+
+                                &.green {
                                     color: #1DA407;
                                 }
                             }
@@ -145,12 +198,9 @@
                     }
                 }
             }
-            .pagination-wrapper {
-                padding: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
+
+           
         }
+        
     }
 }

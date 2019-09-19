@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ListGraphical from './ListGraphical'
-
+import { RouteComponentProps } from 'react-router';
 
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
@@ -9,7 +9,9 @@ interface IState {
    
 }
 
-export default class RatePannel extends Component {
+
+class RatePannel extends Component<RouteComponentProps> {
+   
     state: IState = {
     
     }
@@ -23,7 +25,7 @@ export default class RatePannel extends Component {
             <div className="tab-pane">
                 <Tabs onChange={this.onChangeTab} type="card">
                     <TabPane tab="Forex" key="1">
-                        <ListGraphical />
+                        <ListGraphical {...this.props}/> 
                     </TabPane>
                 
                     <TabPane tab="Optional" key="3">
@@ -35,3 +37,5 @@ export default class RatePannel extends Component {
         )
     }
 }
+
+export default RatePannel

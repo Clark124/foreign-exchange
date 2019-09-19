@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {Spin} from 'antd'
-import './index.scss'
+import './index.less'
 export default class Loading extends Component {
     render(){
         const text = this.props.text

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { message } from 'antd'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router';
 import { getQuote, getKline } from '../../service/serivce'
 import { changeNumber } from '../../utils/utils'
 
@@ -33,7 +33,7 @@ class Home extends Component<IProps,IState>{
     }
     UNSAFE_componentWillMount() {
         // this.onGetQuote('000001.SS')
-        this.onGetKline('000001.SS', 6)
+        // this.onGetKline('000001.SS', 6)
     }
     //股票行情数据
     onGetQuote(code: string) {
@@ -86,4 +86,4 @@ class Home extends Component<IProps,IState>{
 
 
 
-export default Home;
+export default withRouter(Home);

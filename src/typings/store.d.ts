@@ -6,8 +6,12 @@ declare interface IDraftState {
 
 declare type IList = IDraftState[]
 
+declare interface HomeState{
+    headerIndex:number;
+}
+
 declare interface IStoreState {
- 
+    home:HomeState,
     edit: IDraftState,
     list: IList
 }

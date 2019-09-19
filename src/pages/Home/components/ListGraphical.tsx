@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-import { Radio } from 'antd'
+import { Radio, Table } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio';
+// import {ColumnProps} from 'antd/lib/table'
 import ChartList from './ChartList'
-import { getKline } from '../../../service/serivce'
-
+import { getKline, homeList, quoteReal } from '../../../service/serivce'
+import { RouteComponentProps } from 'react-router-dom'
 import { changeNumber } from '../../../utils/utils'
-import { Pagination } from 'antd';
+// import { Pagination } from 'antd';
 
-interface IProps {
-
-}
 
 //列表数据
 interface List {
@@ -33,37 +31,86 @@ interface IState {
 }
 
 
+
+type IProps = RouteComponentProps
+
+
 export default class ListGraphical extends Component<IProps, IState> {
+    columns: ({ title: string; dataIndex: string; align: string; render: (text: any, value: List) => JSX.Element; } | { title: string; dataIndex: string; align: string; render: (text: number) => JSX.Element; } | {})[];
+    
+    constructor(props:IProps){
+        super(props)
+        this.columns = [
+            {
+                title: 'Currency/Code',
+                dataIndex: 'currency',
+                align: "center",
+                render: (text: any, value: List) => (
+                    <div className="currency" onClick={()=>{
+                        this.props.history.push('/tradeRoom/'+value.code)
+                    }}>
+                        <div className="name">{text}</div>
+                        <div className="code">{value.code}</div>
+                    </div>
+                )
+            },
+            {
+                title: 'Latest Price',
+                dataIndex: 'latestPrice',
+                align: "center",
+                render: (text: number) => (
+                    <span className="lastest-price">{text}</span>
+                )
+            },
+            {
+                title: 'CHG',
+                dataIndex: 'chg',
+                align: "center",
+                render: (text: number) => (
+                    <span className={text >= 0 ? 'chg' : 'chg green'}>{text}</span>
+                )
+        
+            },
+            {
+                title: 'Pirce Change',
+                dataIndex: 'priceChange',
+                align: "center",
+                render: (text: number) => (
+                    <span className={text >= 0 ? 'price-change' : 'price-change green'}>{text}</span>
+                )
+            },
+            {
+                title: 'Open',
+                dataIndex: 'open',
+                align: "center",
+            },
+            {
+                title: 'HIGH',
+                dataIndex: 'high',
+                align: "center",
+            },
+            {
+                title: 'LOW',
+                dataIndex: 'low',
+                align: "center",
+            },
+            {
+                title: 'Bid/Ask',
+                dataIndex: 'bid',
+                align: "center",
+                render: (text: any, value: any) => (
+                    <span>
+                        {value.bid}/{value.ask}
+                    </span>
+                )
+            },
+        ];
+    }
     state = {
         selectIndex: 0,
         stockDate: [],
         totalRow: 1,
-        dataList: [{
-            currency: '欧元美元',
-            code: 'EURUSD',
-            latestPrice: 1.1558,
-            chg: 0.34,
-            priceChange: 0.0041,
-            open: 1.1532,
-            high: 1.1571,
-            low: 1.1529,
-            bid: 1.1559,
-            ask: 1.1563,
-        },
-        {
-            currency: '欧元美元',
-            code: 'EURUSD',
-            latestPrice: 1.1558,
-            chg: -0.34,
-            priceChange: -0.0041,
-            open: 1.1532,
-            high: 1.1571,
-            low: 1.1529,
-            bid: 1.1559,
-            ask: 1.1563,
-        }
-        ]
-
+        dataList: [],
     }
     //切换列表、图形
     ChangeViewMode(e: RadioChangeEvent) {
@@ -71,7 +118,38 @@ export default class ListGraphical extends Component<IProps, IState> {
     }
 
     UNSAFE_componentWillMount() {
-        this.onGetKline('000001.SS', 6)
+        // this.onGetKline('000001.SS', 6)
+        this.getHomeList()
+    }
+
+    //首页列表
+    getHomeList() {
+        homeList().then(res => {
+            let code = ""
+            res.data.forEach((value: { prod_code: string; }) => {
+                code = code + value.prod_code + ','
+            })
+            quoteReal({ code }).then((res: any) => {
+                let arr = []
+                arr = res.map((item:any) => {
+                    return {
+                        currency: item.prod_name,
+                        code: item.prod_code,
+                        latestPrice: item.last_px,
+                        chg: item.px_change,
+                        priceChange: item.px_change_rate,
+                        open: item.open_px,
+                        high:item.high_px,
+                        low: item.last_px,
+                        bid: item.bid_grp.split(',')[0],
+                        ask: item.offer_grp.split(',')[0],
+                    }
+                })
+                this.setState({dataList:arr})
+            })
+
+
+        })
     }
 
     //K线图数据
@@ -83,11 +161,8 @@ export default class ListGraphical extends Component<IProps, IState> {
         })
     }
 
-    onChangePage(page:number) {
-        console.log(page)
-    }
     render() {
-        const { selectIndex, totalRow, dataList } = this.state
+        const { selectIndex, dataList } = this.state
         return (
             <div className="table-wrapper">
                 <div className="view-mode">
@@ -98,45 +173,10 @@ export default class ListGraphical extends Component<IProps, IState> {
                     </Radio.Group>
                 </div>
                 {selectIndex === 0 ?
-                    <table className="table">
-                        <tbody>
-                            <tr className="table-header">
-                                <td>Currency/Code</td>
-                                <td>Latest price</td>
-                                <td>CHG</td>
-                                <td>Price Change</td>
-                                <td>Open</td>
-                                <td>HIGH</td>
-                                <td>LOW</td>
-                                <td>Bid/ Ask</td>
-                            </tr>
-                            {dataList.map((item, index) => {
-                                return (
-                                    <tr className="table-item" key={index}>
-                                        <td className="name">
-                                            <div>{item.currency}</div>
-                                            <div>{item.code}</div>
-                                        </td>
-                                        <td className="lastest-price">{item.latestPrice}</td>
-                                        <td className={item.chg >= 0 ? "chg" : "chg green"}>{item.chg}</td>
-                                        <td className={item.priceChange >= 0 ? "price-change" : "price-change green"}>{item.priceChange}</td>
-                                        <td>{item.open}</td>
-                                        <td>{item.high}</td>
-                                        <td>{item.low}</td>
-                                        <td>{item.bid}/{item.ask}</td>
-                                    </tr>
-                                )
-                            })}
-
-
-                        </tbody>
-                    </table> :
+                    <Table dataSource={dataList} columns={this.columns} rowKey="currency" />
+                    :
                     <ChartList {...this.state} />
                 }
-                <div className="pagination-wrapper">
-                    <Pagination defaultCurrent={1} total={totalRow} pageSize={8} onChange={this.onChangePage.bind(this)} />
-                </div>
-
             </div>
         )
     }

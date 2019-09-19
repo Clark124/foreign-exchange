@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import './index.less'
+import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
-import { Select, message } from 'antd';
+import { Select, message, Modal } from 'antd';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types';
+
+import { changeHeaderIndex } from '../../pages/Home/actions'
 
 import { searchStcok } from '../../service/serivce'
 
@@ -20,6 +23,11 @@ interface SearchItem {
     prod_code: string;
 }
 
+interface UserInfo {
+    email: string;
+    token: string;
+}
+
 interface IState {
     tabIndex: number;
     tabList: Array<string>;
@@ -28,14 +36,28 @@ interface IState {
     showLogin: boolean;
     showRegister: boolean;
     showEmailVerificate: boolean;
-    searchList: Array<SearchItem>
+    searchList: Array<SearchItem>;
+    userInfo: UserInfo;
+    hoverIndex: number;
 }
 
 interface Props {
     trade?: boolean
 }
 
-type IProps = RouteComponentProps & InjectedIntlProps & Props
+
+const mapStateToProps = (state: IStoreState, ) => {
+    return {
+        headerIndex: state.home.headerIndex
+    }
+}
+const mapDispatchToProps = {
+    changeHeaderIndex
+}
+type IStateProps = ReturnType<typeof mapStateToProps>
+type IDispatchProps = typeof mapDispatchToProps
+
+type IProps = RouteComponentProps & InjectedIntlProps & Props & IStateProps & IDispatchProps
 
 class Header extends Component<IProps> {
     state: IState = {
@@ -47,10 +69,19 @@ class Header extends Component<IProps> {
         showRegister: false,
         showEmailVerificate: false,
         searchList: [],
+        userInfo: {
+            email: "",
+            token: "",
+        },
+        hoverIndex: 0
     }
     static contextTypes: { changeLanguage: PropTypes.Validator<(...args: any[]) => any>; };
 
     UNSAFE_componentWillMount() {
+        let userInfo = localStorage.getItem('userInfo')
+        if (userInfo) {
+            this.setState({ userInfo: JSON.parse(userInfo) })
+        }
         const language = localStorage.getItem("language")
         if (language) {
             if (language === 'en-US') {
@@ -63,18 +94,20 @@ class Header extends Component<IProps> {
 
     onTabHeader(index: number): void {
         this.setState({ tabIndex: index })
+        if (index === 0) {
+            this.props.history.push('/')
+        }
     }
     //搜索合约
     onSearchStock: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         const code = e.target.value
-        console.log(code)
-        this.setState({searchText:code})
+        this.setState({ searchText: code })
         if (code === "") {
-            this.setState({ searchList: [],  })
+            this.setState({ searchList: [], })
         } else {
             searchStcok({ key: code, count: 20 }).then(res => {
-                this.setState({ searchList: res.data,  })
-            }).catch(err=>{
+                this.setState({ searchList: res.data, })
+            }).catch(err => {
                 message.error("network error")
             })
         }
@@ -82,7 +115,6 @@ class Header extends Component<IProps> {
     }
     //跳转至交易室
     toTradeRoom(item: SearchItem) {
-        console.log(item)
         this.props.history.push('/tradeRoom/' + item.prod_code)
     }
 
@@ -97,9 +129,10 @@ class Header extends Component<IProps> {
         localStorage.setItem('language', value)
         this.context.changeLanguage(value)
     }
-    successLogin() {
-
+    successLogin(userInfo: UserInfo) {
+        this.setState({ showLogin: false, userInfo })
     }
+    //成功注册
     successRegister() {
         this.setState({ showRegister: false, showEmailVerificate: true })
     }
@@ -107,9 +140,48 @@ class Header extends Component<IProps> {
 
     }
 
+    //弹出登出
+    showLogout() {
+        Modal.confirm({
+            title: "Are you sure logout",
+            onOk: () => {
+                localStorage.removeItem("userInfo")
+                this.setState({ userInfo: { email: "", token: "" } })
+            }
+        })
+    }
+    isLogin() {
+        const userInfo = localStorage.getItem('userInfo')
+        if (userInfo) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    selectStockTab(index: number) {
+        let isLogin = this.isLogin()
+        if (isLogin) {
+            this.props.changeHeaderIndex(1)
+            if (index === 0) {
+                this.props.history.push('/aiTrade/build')
+            } else if (index === 1) {
+                this.props.history.push('/aiTrade/intelli')
+            } else if (index === 2) {
+                this.props.history.push('/aiTrade/build')
+            }
+        } else {
+            Modal.info({
+                title: "tips",
+                content: "Please sign in first!"
+            })
+        }
+    }
+
     render() {
-        const { tabList, tabIndex, searchText, language, showLogin, showRegister, searchList, showEmailVerificate } = this.state
+        const { tabList, searchText, language, showLogin, showRegister, searchList, showEmailVerificate, userInfo, hoverIndex } = this.state
         const { trade } = this.props
+        const tabIndex = this.props.headerIndex
         return (
             <div className="header-wrapper">
                 {showLogin ? <Login
@@ -139,9 +211,49 @@ class Header extends Component<IProps> {
                                 return (
                                     <div className={tabIndex === index ? 'tab-item active' : 'tab-item'}
                                         onClick={this.onTabHeader.bind(this, index)} key={index}
+                                        onMouseEnter={() => this.setState({ hoverIndex: index })}
+                                        onMouseLeave={() => this.setState({ hoverIndex: -1 })}
                                     >
                                         <FormattedMessage id={item} defaultMessage={item} />
+                                        <div className="tab-item-select-wrapper">
+                                            {hoverIndex === 1 && index === 1 ?
+                                                <ul className="tab-item-select">
+                                                    <li onClick={this.selectStockTab.bind(this, 0)}>Stradegy Build</li>
+                                                    <li onClick={this.selectStockTab.bind(this, 1)}>Intelli Script</li>
+                                                    <li onClick={this.selectStockTab.bind(this, 2)}>My Stategies</li>
+                                                    <li onClick={this.selectStockTab.bind(this, 3)}>Strategy List</li>
+                                                    <div className="trigle"></div>
+                                                </ul> : null
+                                            }
+                                            {/* {hoverIndex === 2 && index === 2 ?
+                                                <ul className="tab-item-select">
+                                                    <li onClick={this.selectComposeTab.bind(this, 0)}>组合排行</li>
+                                                    <li onClick={this.selectComposeTab.bind(this, 1)}>创建组合</li>
+                                                    <li onClick={this.selectComposeTab.bind(this, 2)}>我的组合</li>
+                                                    <div className="trigle"></div>
+                                                </ul> : null
+                                            }
+                                            {hoverIndex === 3 && index === 3 ?
+                                                <ul className="tab-item-select">
+                                                    <li onClick={this.selectStrategyTab.bind(this, 0)}>搭建策略</li>
+                                                    <li onClick={this.selectStrategyTab.bind(this, 1)}>编写策略</li>
+                                                    <li onClick={() => {
+                                                        this.props.history.push('/strategy/list')
+                                                        this.props.changeHeaderIndex(index)
+                                                    }}>我的策略</li>
+                                                    <li onClick={this.selectStrategyTab.bind(this, 3)}>策略排行</li>
+                                                    <div className="trigle"></div>
+                                                </ul> : null
+                                            }
+                                            {hoverIndex === 4 && index === 4 ?
+                                                <ul className="tab-item-select">
+                                                    <li onClick={this.selectScanTab.bind(this, 0)}>新建扫描</li>
+                                                    <li onClick={this.selectScanTab.bind(this, 1)}>扫描列表</li>
+                                                    <div className="trigle"></div>
+                                                </ul> : null
+                                            } */}
 
+                                        </div>
                                     </div>
                                 )
                             })}
@@ -170,8 +282,18 @@ class Header extends Component<IProps> {
                             }
 
                         </div>
-                        <span className="btn login" onClick={() => this.setState({ showLogin: true })}><FormattedMessage id={'signin'} defaultMessage={'Sign in'}/></span>
-                        <span className="btn register" onClick={() => this.setState({ showRegister: true })}><FormattedMessage id={'register'} defaultMessage={'Sign Up'}/></span>
+                        {userInfo.token ?
+                            <div className="userinfo">
+                                <span className="email">{userInfo.email}</span>
+                                <span className="logout btn" onClick={this.showLogout.bind(this)}>Logout</span>
+                            </div> :
+                            <div>
+                                <span className="btn login" onClick={() => this.setState({ showLogin: true })}><FormattedMessage id={'signin'} defaultMessage={'Sign in'} /></span>
+                                <span className="btn register" onClick={() => this.setState({ showRegister: true })}><FormattedMessage id={'register'} defaultMessage={'Sign Up'} /></span>
+                            </div>
+                        }
+
+
                         <Select value={language} style={{ width: 100, marginLeft: 20 }} onChange={this.changeLanguage.bind(this)}>
                             <Option value={'English'}><FormattedMessage id={'english'} defaultMessage={'English'} /></Option>
                             <Option value={'Chinese'}><FormattedMessage id={'chinese'} defaultMessage={'Chinese'} /></Option>
@@ -187,5 +309,6 @@ Header.contextTypes = {
     changeLanguage: PropTypes.func.isRequired,
 };
 
+const HeaderConnect = connect(mapStateToProps, mapDispatchToProps)(Header)
 
-export default injectIntl(Header)
+export default injectIntl(HeaderConnect)
