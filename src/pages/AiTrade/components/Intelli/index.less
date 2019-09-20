@@ -1,0 +1,325 @@
+.intelli-wrapper {
+    min-height: 500px;
+    background: #323639;
+
+    .input-wrapper {
+        font-size   : 13px;
+        margin-right: 10px;
+        position    : relative;
+
+        .input {
+            height      : 30px;
+            padding-left: 10px;
+        }
+
+        .stock-list {
+            position  : absolute;
+            left      : 0;
+            top       : 31px;
+            background: #fff;
+            z-index   : 10;
+            height    : 200px;
+            width     : 160px;
+            background: #666666;
+            color     : #fff;
+            overflow  : auto;
+
+            >li {
+                height      : 30px;
+                line-height : 30px;
+                padding-left: 10px;
+                font-size   : 13px;
+                cursor      : pointer;
+
+                &:hover {
+                    background: #323639;
+                }
+
+                &:active {
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+
+    .trading_chart_symbols {
+        font-size: 13px;
+    }
+
+    .tradeing_chart_change {
+        font-size: 13px;
+    }
+
+    .tradeing_chart_change_rate {
+        font-size: 13px;
+    }
+
+    .header-link {
+        padding-left: 20px;
+    }
+
+    .intelli-body {
+        display: flex;
+
+        .edit-code-wrapper {
+            // width     : 770px;
+            flex         : 1;
+            height       : 1000px;
+            background   : #272D32;
+
+            .edit-code-title {
+                height      : 60px;
+                line-height : 60px;
+                padding-left: 20px;
+                font-size   : 14px;
+                color       : #fff;
+            }
+
+            .select-theme {
+                height      : 50px;
+                background  : #1A1F22;
+                display     : flex;
+                align-items : center;
+                color       : #768997;
+                padding-left: 20px;
+
+                >input {
+                    width     : 200px;
+                    height    : 30px;
+                    border    : none;
+                    margin    : 0 30px 0 0px;
+                    background: #2C343A;
+                    padding   : 0 10px;
+                    color     : #fff;
+                    font-size : 13px;
+                }
+            }
+
+            .descirbtion {
+                height      : 50px;
+                background  : #1A1F22;
+                display     : flex;
+                align-items : center;
+                color       : #768997;
+                padding-left: 20px;
+
+                >input {
+                    width     : 410px;
+                    height    : 30px;
+                    border    : none;
+                    margin    : 0 30px 0 10px;
+                    background: #2C343A;
+                    padding   : 0 10px;
+                    color     : #fff;
+                    font-size : 13px;
+                }
+            }
+
+            .code-mirror-wrapper {
+                // width   : 850px;
+                overflow   : auto;
+            }
+
+            .operate-btn {
+                height     : 50px;
+                display    : flex;
+                align-items: center;
+                background : #1A1F22;
+
+                >span {
+                    padding      : 3px 20px;
+                    color        : #768997;
+                    border-radius: 5px;
+                    background   : #2C343A;
+                    margin-left  : 20px;
+                    font-size    : 13px;
+                    cursor       : pointer;
+
+                    &:active {
+                        opacity: 0.5;
+                    }
+                }
+            }
+
+            .info-log {
+                color     : #fff;
+                box-sizing: border-box;
+                padding   : 10px;
+                height    : 100px;
+                background: #2C343A;
+                overflow  : auto;
+            }
+
+            .param-list-wrapper {
+                // width  : 350px;
+                background: #1A1F22;
+
+                .param-head {
+                    height         : 50px;
+                    display        : flex;
+                    padding        : 0 30px;
+                    justify-content: space-between;
+                    align-items    : center;
+                    color          : #768997;
+
+                    .btn {
+                        width        : 60px;
+                        height       : 25px;
+                        cursor       : pointer;
+                        background   : #2C343A;
+                        font-size    : 12px;
+                        text-align   : center;
+                        line-height  : 25px;
+                        display      : inline-block;
+                        margin-left  : 15px;
+                        border-radius: 5px;
+
+                        &:active {
+                            opacity: 0.5;
+                        }
+                    }
+                }
+
+                .param-list {
+                    height  : 150px;
+                    overflow: auto;
+
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+                }
+
+                .param-names {
+                    display        : flex;
+                    justify-content: space-between;
+                    margin-bottom  : 2px;
+                    padding        : 0 30px;
+
+                    .ant-select-selection--single {
+                        flex      : 1;
+                        height    : 35px;
+                        background: #2C343A;
+                        border    : none;
+                        outline   : none;
+                        color     : #fff;
+                    }
+
+                    .ant-select-selection__rendered {
+                        line-height: 35px;
+                    }
+
+                    .ant-select-selection {
+                        border-radius: 0;
+                        outline      : none;
+                    }
+
+                    .anticon {
+                        color: #fff;
+                    }
+
+                    .ant-select-arrow {
+                        right: 3px;
+                        top  : 46%;
+                    }
+
+                    .ant-select-selection-selected-value {
+                        overflow: inherit;
+                    }
+
+                    .select-params {
+                        flex        : 1;
+                        height      : 35px;
+                        line-height : 35px;
+                        background  : #2C343A;
+                        overflow    : hidden;
+                        margin-right: 1px;
+                        padding     : 0 10px;
+
+                        >span {
+                            display     : block;
+                            width       : 100%;
+                            height      : 35px;
+                            background  : #2C343A;
+                            line-height : 35px;
+                            text-align  : center;
+                            color       : #83817d;
+                            font-size   : 12px;
+                            margin-right: 1px;
+
+                            &.delete {
+                                cursor: pointer;
+                                color : #fff;
+
+                                &:active {
+                                    opacity: 0.5;
+                                }
+                            }
+                        }
+                    }
+
+                    >span {
+                        flex        : 1;
+                        height      : 35px;
+                        background  : #2C343A;
+                        line-height : 35px;
+                        text-align  : center;
+                        color       : #83817d;
+                        font-size   : 12px;
+                        margin-right: 1px;
+
+                        &.delete {
+                            cursor: pointer;
+                            color : #fff;
+
+                            &:active {
+                                opacity: 0.5;
+                            }
+                        }
+                    }
+
+                    input {
+                        width       : 100%;
+                        height      : 35px;
+                        background  : #2C343A;
+                        line-height : 35px;
+                        text-align  : center;
+                        color       : #fff;
+                        font-size   : 12px;
+                        margin-right: 1px;
+                    }
+                }
+            }
+        }
+
+        .stock-chart-wrapper {
+            width: 800px;
+
+            .backtest-deploy {
+                padding   : 20px;
+                margin-top: 30px;
+
+                .title {
+                    color       : #fff;
+                    margin-right: 10px;
+                }
+
+                .btn-wrapper {
+                    margin-top: 20px;
+
+                    .backtest {
+                        display: inline-block;
+                        width        : 100px;
+                        height       : 32px;
+                        line-height: 32px;
+                        text-align: center;
+                        color        : #768997;
+                        margin-right : 30px;
+                        background   : rgba(44, 52, 58, 1);
+                        border-radius: 4px;
+                        border: 1px solid #666;
+                    }
+                }
+            }
+        }
+    }
+}

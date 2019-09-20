@@ -90,12 +90,44 @@ class Header extends Component<IProps> {
                 this.setState({ language: 'Chinese' })
             }
         }
+        this.setTabIndex()
+    }
+     //当前tab的下标
+     setTabIndex() {
+        const pathname = this.props.history.location.pathname.substring(1)
+        // if (pathname === 'aiTrade') {
+        //     this.props.changeHeaderIndex(1)
+        // }
+        if (pathname.includes('aiTrade')) {
+            this.props.changeHeaderIndex(1)
+        }
+        // if (pathname.includes('compose')) {
+        //     this.props.changeHeaderIndex(2)
+        // }
+        // if (pathname.includes('selectStock')) {
+        //     this.props.changeHeaderIndex(1)
+        // }
+        // if (pathname.includes('scanning')) {
+        //     this.props.changeHeaderIndex(4)
+        // }
+
     }
 
     onTabHeader(index: number): void {
-        this.setState({ tabIndex: index })
-        if (index === 0) {
-            this.props.history.push('/')
+        switch (index) {
+            case 0:
+                this.props.history.push('/')
+                this.props.changeHeaderIndex(index)
+                break
+            case 1:
+                // this.props.history.push('/selectStock')
+                // this.props.changeHeaderIndex(index)
+                break
+            case 5:
+                // this.props.history.push('/traderoom')
+                break
+            default:
+                break
         }
     }
     //搜索合约
@@ -294,7 +326,7 @@ class Header extends Component<IProps> {
                         }
 
 
-                        <Select value={language} style={{ width: 100, marginLeft: 20 }} onChange={this.changeLanguage.bind(this)}>
+                        <Select value={language} style={{ width: 142, marginLeft: 20 }} onChange={this.changeLanguage.bind(this)}>
                             <Option value={'English'}><FormattedMessage id={'english'} defaultMessage={'English'} /></Option>
                             <Option value={'Chinese'}><FormattedMessage id={'chinese'} defaultMessage={'Chinese'} /></Option>
                         </Select>

@@ -7,43 +7,42 @@ import { message } from 'antd';
 import Loading from '../../../Loading/index'
 
 interface Iprops {
-    closeVerificate:any;
-
+    closeVerificate: () => void;
 }
-interface IState{
-    status:string;
+interface IState {
+    status: string;
 }
 
 export default class Verification extends Component<Iprops> {
-    state:IState={
-        status:''
+    state: IState = {
+        status: ''
     }
     onResend() {
         const userId = localStorage.getItem('userId')
         const data = {
             user_id: userId
         }
-        this.setState({status:"loading"})
+        this.setState({ status: "loading" })
         sendActiveEamil(data).then(res => {
             if (res.data === 'fail') {
                 message.error('send fail')
                 this.props.closeVerificate()
-                this.setState({status:"fail"})
-            }else{
+                this.setState({ status: "fail" })
+            } else {
                 message.success('send success,please check your email')
                 this.props.closeVerificate()
-                this.setState({status:"success"})
+                this.setState({ status: "success" })
             }
         }).catch(err => {
-            this.setState({status:"fail"})
+            this.setState({ status: "fail" })
         })
     }
-   
+
     render() {
-        const {status} = this.state
+        const { status } = this.state
         return (
             <div className="verificate-wrapper">
-                {status==='loading'?<Loading/>:null}
+                {status === 'loading' ? <Loading /> : null}
                 <div className="verificate">
                     <img src={icon_cancel} alt="" className="icon-cancel" onClick={() => this.props.closeVerificate()} />
                     <div className="title">Eamil Verification</div>

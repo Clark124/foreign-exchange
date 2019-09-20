@@ -1,0 +1,23 @@
+.AddStrategyDialog .ant-table-thead > tr > th{
+  background: #fff;
+  color: #333;
+  border: none;
+}
+.AddStrategyDialog .ant-table-body{
+  color: #333;
+}
+.AddStrategyDialog .ant-table-tbody > tr > td{
+  border: none;
+  white-space: nowrap;
+}
+.AddStrategyDialog .ant-table-tbody > tr:hover {
+  cursor: pointer;
+}
+.AddStrategyDialog .ant-table-tbody > tr:hover td{
+  background: rgba(230, 247, 252, 1);
+}
+.AddStrategyDialog .ant-table-fixed-header .ant-table-scroll .ant-table-header{
+  overflow: hidden;
+  padding-bottom: 20px!important;
+  margin-bottom: -20px!important;
+}

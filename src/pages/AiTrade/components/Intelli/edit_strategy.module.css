@@ -1,0 +1,110 @@
+.IntelliScriptContent-content{
+  color: #fff;
+  background: #353E45;
+  padding-top: 20px;
+}
+.IntelliScriptContent-content .ant-breadcrumb  {
+  margin: 0;
+  padding: 16px;
+}
+
+.IntelliScriptContent-content .ant-breadcrumb>span:first-child,
+.IntelliScriptContent-content .ant-breadcrumb .ant-breadcrumb-separator {
+  color: #fff;
+}
+.IntelliScriptContent-block-title{
+  height: 40px;
+  line-height: 40px;
+  text-indent: 1em;
+  font-size: 13px;
+}
+.IntelliScriptContent-block-setting{
+  height: 50px;
+  background: #1A1F22;
+  font-size: 13px;
+  color: #697984;
+}
+.IntelliScriptContent-block-setting-label{
+  line-height: 50px;
+  display: inline-block;
+  margin: 0 12px
+}
+.IntelliScriptContent-column{
+  white-space: nowrap;
+}
+.IntelliScriptContent-content .ant-calendar-picker-input.ant-input{
+  background: #2C3339;
+  border-color: #1A1F22;
+  color: #6A7883;
+}
+.IntelliScriptContent-content .ant-calendar-picker-icon{
+  display: none;
+}
+.IntelliScriptContent-content .anticon.anticon-close-circle.ant-calendar-picker-clear{
+  background: #2C3339;
+}.IntelliScriptContent-content .ant-calendar-picker-clear,.ant-calendar-picker-icon{
+  right: 22px;
+}
+.IntelliScriptContent-content .ant-calendar-range-picker-separator{
+  display: none;
+}
+.IntelliScriptContent-content .ant-table-thead > tr > th,.IntelliScriptContent-content .ant-table-tbody > tr > td{
+  background: #2C343A;
+}
+.IntelliScriptContent-content .ant-table-bordered .ant-table-thead > tr > th,.IntelliScriptContent-content .ant-table-bordered .ant-table-tbody > tr > td{
+  border: 2px solid #1A1F22;
+}
+.IntelliScriptContent-content .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,.IntelliScriptContent-content .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,.IntelliScriptContent-content .ant-table-thead > tr:hover:not(.ant-table-expanded-row) > td,.IntelliScriptContent-content .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td{
+  background: #2C343A;
+}
+.btn-darkness{
+  margin: 0 5px;
+  font-size: 13px;
+  height: 32px;
+  line-height: 13px;
+  padding: 9px 5px;
+  background: #2A343C;
+  border: 1px solid #202529;
+  color: #6A7883;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+.btn-darkness:active{
+  background: #202A32;
+}
+.ant-input.input-darkness{
+  display: inline-block;
+  width: 180px;
+  height: 32px;
+  background: #2C3339;
+  border-color: #202529;
+  color: #6A7883;
+}
+
+select.select-darkness{
+  height: 32px;
+  text-indent: 0.5em;
+  border-radius: 4px;
+  width: 170px;
+  line-height: 32px;
+  background: #2C3339;
+  border-color: #202529;
+  color: #6A7883;
+}
+.back-btn {
+  width: 80px;
+  height: 32px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 2px 4px 0px rgba(6, 32, 116, 0.41);
+  border-radius: 16px;
+  display: inline-block;
+  text-align: center;
+  line-height: 32px;
+  color: #557CFB;
+  cursor: pointer;
+}
+.cm-s-monokai .CodeMirror-gutters {
+  background: #2C343A;
+  border-right: 0px;
+}

@@ -3,12 +3,14 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types';
 import TradingChart from '../tradingchart/tradingchart'
 import Service from '../../utils/server'
+import {searchStcok} from '../../service/serivce'
+
 import { post, tick_size, optional } from '../../utils/utils'
 import '../tradingroom/tradingroom.css'
 import lodash from 'lodash';
 import { SaveChartAsImage } from "react-stockcharts/lib/helper";
 import { default as Drag } from '../../utils/drag';
-import { Tooltip, Modal, Tabs, Select, Checkbox, Slider, message, Input, Button, AutoComplete, Icon } from 'antd';
+import { Tooltip, Modal, Tabs, Select, Checkbox, Slider, message, Input, Button } from 'antd';
 import emitter from '../../utils/events';
 // import {WS, DataService} from '../../utils/SocketService'
 import * as indicatorMap from "react-stockcharts/lib/indicator";
@@ -191,8 +193,8 @@ class TradeRoomChart extends Component {
         this.handleChoosePosition = this.handleChoosePosition.bind(this);
         this.onKeyPress = this.onKeyPress.bind(this);
         this.getInteractiveNode = this.getInteractiveNode.bind(this);
-        this.handleSearchStock = this.handleSearchStock.bind(this);
-        this.handleSelectStock = this.handleSelectStock.bind(this);
+        // this.handleSearchStock = this.handleSearchStock.bind(this);
+        // this.handleSelectStock = this.handleSelectStock.bind(this);
         // this.dataService = new DataService(WS.EX.HITBTC);
 
         let drawObj = {};
@@ -245,6 +247,8 @@ class TradeRoomChart extends Component {
             stockListOption: [],
             period: 'D1',
             lastDisabledDate: '',
+            searchText: "",
+            searchList: [],
         }
     }
     getChildContext() {
@@ -283,26 +287,38 @@ class TradeRoomChart extends Component {
                 <div style={{ wdith: width, position: 'relative', background: '#282D33' }}>
                     <div className="trading_chart_header" style={{ flexDirection: width > 600 ? 'row' : 'column', alignItems: width > 600 ? 'center' : 'flex-start', padding: ' 0 10px' }}>
                         <div className="trading_chart_realData">
-                            {this.props.isIntelliScript !== undefined && this.props.isIntelliScript === true && <div className="autoComplete-darkness"><AutoComplete dataSource={this.state.stockListOption} onSelect={this.handleSelectStock} onSearch={this.handleSearchStock}><Input suffix={<Icon type="search" theme="outlined" />} className="input-darkness" /></AutoComplete></div>}
-                            {/*<Tooltip placement="topRight" title='favorite'>
-                                {
-                                    this.props.isIntelliScript === false || this.props.isIntelliScript === undefined && <span className="trading_chart_favor" onClick={this.addFavorite}>
-                                    {   this.state.isFavorite ?
-                                        <i className="iconfont icon-favorite iconIsFavorite"></i>
-                                        :
-                                        <i className="iconfont icon-favorites"></i>
+                            {
+                                this.props.isIntelliScript !== undefined && this.props.isIntelliScript === true &&
+                                <div className="input-wrapper">
+                                    <input className="input"
+                                        placeholder={this.props.stockCode}
+                                        onChange={this.onSearchStock.bind(this)}
+                                        value={this.state.searchText}
+                                    />
+                                    {this.state.searchList.length > 0 ?
+                                        <ul className="stock-list">
+                                            {this.state.searchList.map((item, index) => {
+                                                return (
+                                                    <li key={index} onClick={this.changeCode.bind(this, item)}>
+
+                                                        <span>{item.prod_code}</span>
+                                                    </li>
+                                                )
+                                            })}
+                                        </ul> : null
                                     }
-                                </span>
-                                }
-                            </Tooltip>*/}
+
+                                </div>
+                            }
+
                             <Tooltip placement="topRight" title={symbol}>
                                 <span className="trading_chart_symbols">{quote.prod_code}({quote.prod_name})</span>
                             </Tooltip>
                             <Tooltip placement="topRight" title={last}>
-                                <span style={{ color: quote.px_change_rate >= 0 ? upColor : downColor, padding: '0 10px' }}>{quote.last_px ? quote.last_px.toFixed(2) : '--'}</span>
+                                <span className="tradeing_chart_change" style={{ color: quote.px_change_rate >= 0 ? upColor : downColor, padding: '0 10px' }}>{quote.last_px ? quote.last_px.toFixed(2) : '--'}</span>
                             </Tooltip>
                             <Tooltip placement="topRight" title={change}>
-                                <span style={{ color: quote.px_change_rate >= 0 ? upColor : downColor }}>{quote.px_change_rate ? quote.px_change_rate.toFixed(2) : '--'}%</span>
+                                <span className="tradeing_chart_change_rate" style={{ color: quote.px_change_rate >= 0 ? upColor : downColor }}>{quote.px_change_rate ? quote.px_change_rate.toFixed(2) : '--'}%</span>
                             </Tooltip>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -429,10 +445,7 @@ class TradeRoomChart extends Component {
                                 </Tooltip>
                             </div>
                         </div>
-                        {/*<button onClick={()=>this.changeMACD()}>更换macd颜色</button>*/}
-                        {/*<button onClick={()=>this.resetMACD()}>恢复macd颜色</button>*/}
-                        {/*<button onClick={()=>this.addBuyPoint()}>添加买卖点</button>*/}
-                        {/*<button onClick={()=>this.removeBuyPoint()}>删除买卖点</button>*/}
+                      
                     </div>
                     <div id="trading_chart" className="trading_chart"
                         ref={(node) => this.trading_chart = node}
@@ -579,25 +592,24 @@ class TradeRoomChart extends Component {
             return;
         };
     }
-    // showOptimalFunc=(data)=>{
-    //     if(data.length>0){
-    //         data.forEach((item)=>{
-    //             item.signal={...item}
-    //         })
-    //         console.log(data)
-    //         this.indexRealList(this.state.tradeCode,this.state.period,null,data);
-    //     }
-    // }
+
     //股票搜索
-    handleSearchStock(value) {
-        if (value !== '') {
-            post(Service.test + Service.realWizard, { key: value }, false).then(data => {
-                let options = data.data.map(data => {
-                    return <AutoComplete.Option className="autoComplete-option" key={data.currency}>{data.currency}</AutoComplete.Option>
-                })
-                this.setState({ stockList: data.data, stockListOption: options });
+    onSearchStock(e) {
+        const code = e.target.value
+        this.setState({ searchText: code })
+        if (code === "") {
+            this.setState({ searchList: [], })
+        } else {
+            searchStcok({ key: code, count: 20 }).then(res => {
+                this.setState({ searchList: res.data, })
+            }).catch(err => {
+                message.error("network error")
             })
         }
+    }
+    changeCode(item){
+        this.setState({searchText:"",searchList:[]})
+        this.props.changeStockCode(item)
     }
     //选择股票
     handleSelectStock(value) {
@@ -821,34 +833,7 @@ class TradeRoomChart extends Component {
         //判断是否是自选
         this.isOptional(symbol)
     }
-    // realTop(tradeCode) {
-    //     let symbol = tradeCode.symbol;
-    //     post(Service.host + Service.realTickerSingle, { symbols: symbol }).then((data) => {
-    //         let newData = conversionNum(data.data, symbol)
-    //         if (localStorage.getItem('TICK_SIZE')) { //如果有缓存
-    //             let data = JSON.parse(localStorage.getItem('TICK_SIZE'))
-    //             let tick_size = data[symbol]
-    //             newData[0].name = tradeCode.currency
-    //             newData[0].last = newData[0].last.toFixed(tick_size)
-    //             newData[0].open = newData[0].open.toFixed(tick_size)
-    //             this.setState({
-    //                 tradeData: newData[0],
-    //                 px_change: (((newData[0].last - newData[0].open) / newData[0].open) * 100).toFixed(2)
-    //             })
-    //         } else {
-    //             tick_size().then((data) => {
-    //                 let tick_size = data[symbol]
-    //                 newData[0].name = tradeCode.currency
-    //                 newData[0].last = newData[0].last.toFixed(tick_size)
-    //                 newData[0].open = newData[0].open.toFixed(tick_size)
-    //                 this.setState({
-    //                     tradeData: newData[0],
-    //                     px_change: (((newData[0].last - newData[0].open) / newData[0].open) * 100).toFixed(2)
-    //                 })
-    //             })
-    //         }
-    //     })
-    // }
+   
     isOptional(symbol) {
         //判断是否是自选
         if (localStorage.getItem('optional')) {

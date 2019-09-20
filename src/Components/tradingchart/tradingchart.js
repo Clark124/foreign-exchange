@@ -463,7 +463,7 @@ const AnnotationOptions = {
         // fill: d => d.signal === "buy"?'#fff':'#fff',
         // path: buyPath,
         text: d => d.signal === "buy"? "\ue7ca":"\ue7c9",
-        tooltip: d => d.signal === "buy"?"买":"卖",
+        tooltip: d => d.signal === "buy"?"B":"S",
     }
 
 };
