@@ -8,7 +8,7 @@ export default class Build extends Component{
     render(){
         // const { step } = this.state
         return (
-            <div className="build-wrapper">
+            <div className="build-wrapper container">
                  <div className="header-link">
                     <span className="btn">Ai-Trade</span>
                     <span className="arrow">></span>
