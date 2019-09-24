@@ -404,10 +404,11 @@ export function strategyVersion(data) {
     return postData(ezquant + '/quant/strategy/history/version', data)
 }
 
+
 //搭建策略
 //指标列表
-export function indicateList(data) {
-    return postData(ezquant + '/quant/conditions/sys', data)
+export function indicateList(data,token) {
+    return getAddToken(host + '/strategy/builder/system', data,token)
 }
 
 //编译策略代码

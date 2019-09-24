@@ -22,3 +22,17 @@
   border: 1px solid #eee;
   border-top: none;
 }
+.ant-modal .params-list{
+  font-size: 16px;
+}
+.ant-modal .params-list .param-item{
+  margin-bottom: 10px;
+}
+.ant-modal .params-list .param-item input{
+  border: 1px solid #eee;
+  padding-left: 10px;
+}
+.ant-modal .params-list .param-item .param-name{
+  display: inline-block;
+  width: 100px;
+}

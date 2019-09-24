@@ -252,7 +252,7 @@ class Header extends Component<IProps> {
                                                 <ul className="tab-item-select">
                                                     <li onClick={this.selectStockTab.bind(this, 0)}>Stradegy Build</li>
                                                     <li onClick={this.selectStockTab.bind(this, 1)}>Intelli Script</li>
-                                                    <li onClick={this.selectStockTab.bind(this, 2)}>My Stategies</li>
+                                                    <li onClick={this.selectStockTab.bind(this, 2)}>My Strategies</li>
                                                     <li onClick={this.selectStockTab.bind(this, 3)}>Strategy List</li>
                                                     <div className="trigle"></div>
                                                 </ul> : null

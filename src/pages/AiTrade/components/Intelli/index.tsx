@@ -440,9 +440,11 @@ export default class Intelli extends Component<IProps> {
     //K线图数据
     onGetKline(prod_code: string, period: number) {
         getKline({ prod_code, period }).then(res => {
-            let data = res.data.candle[prod_code]
-            data = changeNumber(data, 2)
-            this.setState({ stockDate: data })
+            if(res.data){
+                let data = res.data.candle[prod_code]
+                data = changeNumber(data, 2)
+                this.setState({ stockDate: data })
+            }
         })
     }
     //股票行情数据

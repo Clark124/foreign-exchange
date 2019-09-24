@@ -318,7 +318,7 @@ class TradeRoomChart extends Component {
                                 <span className="tradeing_chart_change" style={{ color: quote.px_change_rate >= 0 ? upColor : downColor, padding: '0 10px' }}>{quote.last_px ? quote.last_px.toFixed(2) : '--'}</span>
                             </Tooltip>
                             <Tooltip placement="topRight" title={change}>
-                                <span className="tradeing_chart_change_rate" style={{ color: quote.px_change_rate >= 0 ? upColor : downColor }}>{quote.px_change_rate ? quote.px_change_rate.toFixed(2) : '--'}%</span>
+                                <span className="tradeing_chart_change_rate" style={{ color: quote.px_change_rate >= 0 ? upColor : downColor }}>{quote.px_change_rate===0||quote.px_change_rate ? quote.px_change_rate.toFixed(2) : '--'}%</span>
                             </Tooltip>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>

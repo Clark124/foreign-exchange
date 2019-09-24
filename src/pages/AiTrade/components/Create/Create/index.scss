@@ -1,0 +1,225 @@
+.create-strategy-wrapper {
+  color: #333;
+  .head-tab-wrapper {
+    position: relative;
+    margin-bottom: 30px;
+    .tab-btn {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 60px;
+      right: 0;
+      display: flex;
+      .btn {
+        flex: 1;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        font-size: 16px;
+        color: #333;
+        cursor: pointer;
+        &.active {
+          color: #fff;
+        }
+        &:active {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  .enter-wrapper {
+    .title {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .indicate-list {
+      box-sizing: border-box;
+      min-height: 150px;
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      .indicate-item {
+        display: inline-block;
+        width: 190px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 12px;
+        color: #666;
+        border: 1px solid #eee;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        padding: 0 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          background: #eee;
+        }
+        &:active {
+          opacity: 0.5;
+        }
+      }
+    }
+    .select-list {
+      background: #fff;
+      min-height: 150px;
+      padding-bottom: 20px;
+      .head {
+        height: 66px;
+        display: flex;
+        align-items: center;
+        > span {
+          flex: 1;
+          text-align: center;
+          font-size: 15px;
+          color: #8a8a8a;
+        }
+      }
+      .no-list {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+        font-size: 16px;
+      }
+      .select-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        .name,
+        .select-wrapper,
+        .input-wrapepr,
+        .img-wrapepr {
+          flex: 1;
+          text-align: center;
+        }
+        .name {
+          color: #2a89ff;
+          cursor: pointer;
+          &:active {
+            opacity: 0.5;
+          }
+        }
+        .range {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: border-box;
+          .input-2 {
+            width: 120px;
+            height: 30px;
+            border: 1px solid #ccc;
+            padding-left: 10px;
+          }
+        }
+
+        .input-1 {
+          width: 150px;
+          height: 30px;
+          border: 1px solid #ccc;
+          padding-left: 10px;
+        }
+        .close-img {
+          cursor: pointer;
+          &:active {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+  .btn-wrapper{
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+      .btn{
+          width: 200px;
+          height: 40px;
+          background: #2a89ff;
+          border-radius: 20px;
+          line-height: 40px;
+          text-align: center;
+          color: #fff;
+          margin-right: 30px;
+          cursor: pointer;
+          &:active{
+              opacity: 0.5;
+          }
+      }
+  }
+  .risk-wrapper {
+    .title {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .indicate-wrapper{
+        background: #fff;
+        padding: 20px;
+        .input-item{
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            .input-count{
+                width: 180px;
+                height: 30px;
+                border: 1px solid #eee;
+                margin-right: 10px;
+                padding-left: 10px;
+            }
+            &.select{
+                align-items: flex-start;
+            }
+            .item-name{
+                width: 150px;
+            }
+            .buyset-item{
+                display: flex;
+                margin-bottom: 20px;
+            }
+            .buy-set-title{
+                margin-right: 30px;
+            }
+            .buy-set-title-2{
+                margin-right: 55px;
+            }
+            .buy-set-input{
+                width: 100px;
+                height: 30px;
+                border: 1px solid #eee;
+                margin-right: 10px;
+                padding-left: 10px;
+            }
+        }
+        .mark{
+            color: #999;
+        }
+    }
+    .input-strategy-name{
+        margin-top: 20px;
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+        &.discrib-wrapper{
+            align-items: flex-start;
+        }
+        .item-name{
+            width: 150px;
+        }
+        .input-count{
+            width: 300px;
+            height: 30px;
+            border: 1px solid #eee;
+            margin-right: 10px;
+            padding-left: 10px;
+        }
+        .discrib{
+            flex:1;
+            height: 150px;
+            resize: none;
+            border: 1px solid #eee;
+            padding: 10px 20px;
+        }
+    }
+  }
+}
