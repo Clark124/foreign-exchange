@@ -183,8 +183,9 @@ export default class Intelli extends Component<IProps> {
         if (userInfo) {
             token = JSON.parse(userInfo).token
         }
-
+        this.setState({ status: "loading" })
         compileStrategy(data, token).then(res => {
+            this.setState({ status: "success" })
             if (!res.error) {
                 if (callback && (typeof callback === 'function')) {
                     callback()
@@ -197,6 +198,8 @@ export default class Intelli extends Component<IProps> {
                 this.setState({ compileInfo: info })
                 message.error('策略编译失败！')
             }
+        }).catch(err=>{
+            this.setState({ status: "success" })
         })
 
     }
@@ -254,6 +257,8 @@ export default class Intelli extends Component<IProps> {
                 } else if (res.error) {
                     message.error(res.error)
                 }
+            }).catch(err=>{
+                // this.setState({ status: "success" })
             })
 
         })

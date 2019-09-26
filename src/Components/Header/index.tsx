@@ -166,6 +166,11 @@ class Header extends Component<IProps> {
     }
     //成功注册
     successRegister() {
+        this.setState({ showRegister: false})
+    }
+
+    //注册失败
+    failRegister(){
         this.setState({ showRegister: false, showEmailVerificate: true })
     }
     onShowAgreement() {
@@ -200,7 +205,9 @@ class Header extends Component<IProps> {
             } else if (index === 1) {
                 this.props.history.push('/aiTrade/intelli')
             } else if (index === 2) {
-                this.props.history.push('/aiTrade/build')
+                this.props.history.push('/aiTrade/list')
+            } else if (index ===3) {
+                this.props.history.push('/aiTrade/list')
             }
         } else {
             Modal.info({
@@ -224,6 +231,7 @@ class Header extends Component<IProps> {
                 /> : null}
                 {showRegister ? <Register
                     successRegister={this.successRegister.bind(this)}
+                    failRegister={this.failRegister.bind(this)}
                     closeRegister={() => this.setState({ showRegister: false })}
                     onShowAgreement={this.onShowAgreement.bind(this)}
                     toLogin={() => this.setState({ showRegister: false, showLogin: true })}

@@ -1,8 +1,20 @@
 import axios from 'axios'
- 
+
 import Service from './server'
 // import TICK_SIZE from './ticks';
 import moment from 'moment'
+
+axios.interceptors.response.use((res) => {
+    if (res.data.login_error) {
+        localStorage.removeItem('userId')
+        localStorage.removeItem('userInfo')
+        window.location.href = '/'
+        alert(res.data.login_error)
+    } else {
+        return res
+    }
+});
+
 export function post(url, data, isformData = false) {
     return new Promise((resolve, reject) => {
         // let header = isformData ? null : { 'Content-type': 'application/json' };
@@ -77,13 +89,13 @@ export function get(url, data) {
 
 export const getAddToken = (url, data, token) => {
     return new Promise((resolve, reject) => {
-      axios.get(url, { params: data, headers: { 'token': token } }).then(res => {
-        resolve(res.data)
-      }).catch(err => {
-        reject(err)
-      })
+        axios.get(url, { params: data, headers: { 'token': token } }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err)
+        })
     })
-  }
+}
 
 
 /*k线数据格式化成图形需要的格式*/

@@ -285,8 +285,8 @@ export function deployStrategy(data) {
 }
 
 //我的策略列表
-export function myStrategyList(data) {
-    return postData(ezquant + '/quant/strategy/list/data', data)
+export function myStrategyList(data,token) {
+    return getAddToken(host + '/my/strategy/list', data,token)
 }
 
 //删除我的策略

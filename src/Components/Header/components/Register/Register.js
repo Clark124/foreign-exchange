@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import './index.less'
 import icon_cancel from './assets/icon_cancel.png'
 import { message, Checkbox } from 'antd'
-import { register } from '../../../../service/serivce'
+import { register, sendActiveEamil } from '../../../../service/serivce'
 import { injectIntl, FormattedMessage } from 'react-intl'
+import Loading from '../../../Loading/index'
 
 class Register extends Component {
     constructor() {
         super()
         this.state = {
+            status: '',
             email: "",
             password: "",
             passwordConfirm: "",
@@ -43,12 +45,24 @@ class Register extends Component {
             email,
             password,
         }
-        console.log(data)
+        this.setState({ status: 'loading' })
         register(data).then(res => {
             if (res.data.id) {
                 localStorage.setItem('userId', res.data.id)
-                message.success("Register success")
+                const data = {
+                    user_id: res.data.id
+                }
+                sendActiveEamil(data).then(res => {
+                    if (res.data === 'fail') {
+                        message.error('active fail')
+                    } else {
+                        message.success("Register success ,please check your email!")
+                    }
+                    this.setState({ status: 'success' })
+                })
                 this.props.successRegister()
+            } else {
+                this.props.failRegister()
             }
         })
 
@@ -56,9 +70,10 @@ class Register extends Component {
 
     }
     render() {
-        const { email, password, passwordConfirm, agree } = this.state
+        const { email, password, passwordConfirm, agree, status } = this.state
         return (
             <div className="register-wrapper">
+                {status === 'loading' ? <Loading /> : null}
                 <div className="login">
                     <img src={icon_cancel} alt="" className="icon-cancel" onClick={() => this.props.closeRegister()} />
                     <div className="title"><FormattedMessage id={'createAccount'} defaultMessage={'Create A New Account'} /></div>
