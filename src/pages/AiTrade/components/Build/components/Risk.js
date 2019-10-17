@@ -32,13 +32,13 @@ export default class Risk extends Component {
         const { isRepeatBuy, buyset, singleBuyPercent, singleBuyCount, minHold, maxHold, stopProfit, stopLose, moveStopLose, strategyName } = this.state
         const data = {
             is_repeat: isRepeatBuy === 'false' ? 0 : 1,
-            capital_ratio: buyset === 1 ? singleBuyPercent : "",
-            lots: buyset === 2 ? singleBuyCount : "",
-            max_position_time: maxHold,
-            min_position_time: minHold,
-            profit_ratio: stopProfit,
-            loss_ratio: stopLose,
-            move_loss_ratio: moveStopLose,
+            buyPercent: buyset === 1 ? singleBuyPercent : "",
+            buyShares: buyset === 2 ? singleBuyCount : "",
+            maxDays: maxHold,
+            minDays: minHold,
+            stopProfit: stopProfit,
+            stopLost: stopLose,
+            stopMoving: moveStopLose,
             strategy_name: strategyName,
         }
         this.props.lookCode(data)
@@ -63,19 +63,20 @@ export default class Risk extends Component {
         if (strategyName.trim() === "") {
             Modal.error({
                 title: "提示",
-                content: "请输入策略名称"
+                content: "please input strategy name"
             })
             return
         }
         const data = {
-            is_repeat: isRepeatBuy === 'false' ? 0 : 1,
-            capital_ratio: buyset === 1 ? singleBuyPercent : "",
-            lots: buyset === 2 ? singleBuyCount : "",
-            max_position_time: maxHold,
-            min_position_time: minHold,
-            profit_ratio: stopProfit,
-            loss_ratio: stopLose,
-            move_loss_ratio: moveStopLose,
+            positionControl: isRepeatBuy === 'false' ? 0 : 1,
+            initCaptital:10000,
+            buyPercent: buyset === 1 ? singleBuyPercent : "",
+            buyShares: buyset === 2 ? singleBuyCount : "",
+            maxDays: maxHold,
+            minDays: minHold,
+            stopProfit: stopProfit,
+            stopLost: stopLose,
+            stopMoving: moveStopLose,
             strategy_name: strategyName,
             description: strategyDiscrib,
         }
@@ -182,7 +183,6 @@ export default class Risk extends Component {
                 <div className="btn-wrapper">
                     <div className="btn" onClick={() => this.props.changeStep(2)}>BACK</div>
                     <div className="btn" onClick={this.lookCode.bind(this)}>VIEW CODE</div>
-                    <div className="btn" onClick={this.lookCode.bind(this)}>BACKTESTT</div>
                     <div className="btn" onClick={this.onSave.bind(this)}>SAVE</div>
                 </div>
             </div>

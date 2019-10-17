@@ -20,7 +20,7 @@ class AddFuncDialog extends Component {
         this.cancel = this.cancel.bind(this);
 
     }
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.fetchFncList();
     }
     fetchFncList(index) {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Select, Modal } from 'antd'
-import close_img from '../images/close.jpg'
+import { Modal, Tabs } from 'antd'
+import SelectList from './SelectList'
 
-const Option = Select.Option;
+const TabPane = Tabs.TabPane;
 
 
 
@@ -10,58 +10,119 @@ export default class Enter extends Component {
     constructor() {
         super()
         this.state = {
-            selectList: [],
+            selectListLong: [],
+            selectListShort: [],
             parameter: [], //编辑参数设置
+            tabsIndex: 1,
+            checked: true,
         }
     }
 
     onSelectIndicate(item) {
-        let { selectList } = this.state
-        selectList.push(item)
-        this.setState({ selectList })
+        const { tabsIndex } = this.state
+        if (tabsIndex === 1) {
+            let { selectListLong } = this.state
+            selectListLong.push(item)
+            this.setState({ selectListLong })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort.push(item)
+            this.setState({ selectListShort })
+        }
+
     }
 
     //切换比较符
-    changeCompare(e, index) {
-        let { selectList } = this.state
-        selectList[index].operator = e
-        this.setState({ selectList })
+    changeCompare(e, index, type) {
+        if (type === 0) {
+            let { selectListLong } = this.state
+            selectListLong[index].operator = e
+            this.setState({ selectListLong })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort[index].operator = e
+            this.setState({ selectListShort })
+        }
     }
-    changeInput1(e, index) {
-        let { selectList } = this.state
-        selectList[index].comparand = e.target.value
-        this.setState({ selectList })
+
+    changeInput1(e, index, type) {
+        if (type === 0) {
+            let { selectListLong } = this.state
+            selectListLong[index].comparand = e.target.value
+            this.setState({ selectListLong })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort[index].comparand = e.target.value
+            this.setState({ selectListShort })
+        }
+
     }
-    changeInput2(e, index) {
-        let { selectList } = this.state
-        selectList[index].value1 = e.target.value
-        this.setState({ selectList })
+    changeInput2(e, index, type) {
+        if (type === 0) {
+            let { selectListLong } = this.state
+            selectListLong[index].value1 = e.target.value
+            this.setState({ selectListLong })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort[index].value1 = e.target.value
+            this.setState({ selectListShort })
+        }
+
     }
-    changeInput3(e, index) {
-        let { selectList } = this.state
-        selectList[index].value2 = e.target.value
-        this.setState({ selectList })
+    changeInput3(e, index, type) {
+        if (type === 0) {
+            let { selectListLong } = this.state
+            selectListLong[index].value2 = e.target.value
+            this.setState({ selectListLong })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort[index].value2 = e.target.value
+            this.setState({ selectListShort })
+        }
+
     }
     //删除选择的指标
-    cancelIndicate(index) {
-        let { selectList } = this.state
-        selectList = selectList.filter((item, itemIndex) => {
-            return index !== itemIndex
-        })
-        this.setState({ selectList })
+    cancelIndicate(index, type) {
+        if (type === 0) {
+            let { selectListLong } = this.state
+            selectListLong = selectListLong.filter((item, itemIndex) => {
+                return index !== itemIndex
+            })
+            this.setState({ selectListLong })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort = selectListShort.filter((item, itemIndex) => {
+                return index !== itemIndex
+            })
+            this.setState({ selectListShort })
+        }
+
     }
 
 
-    showModal(index) {
-        let { selectList } = this.state
-        selectList[index].visible = true
-        this.setState({ selectList, parameter: JSON.parse(JSON.stringify(selectList[index].parameter)) })
+    showModal(index, type) {
+        if (type === 0) {
+            let { selectListLong } = this.state
+            selectListLong[index].visible = true
+            this.setState({ selectListLong, parameter: JSON.parse(JSON.stringify(selectListLong[index].parameter)) })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort[index].visible = true
+            this.setState({ selectListShort, parameter: JSON.parse(JSON.stringify(selectListShort[index].parameter)) })
+        }
     }
 
-    hideModal(index) {
-        let { selectList } = this.state
-        selectList[index].visible = false
-        this.setState({ selectList })
+    hideModal(index, type) {
+        if (type === 0) {
+            let { selectListLong } = this.state
+            selectListLong[index].visible = false
+            this.setState({ selectListLong })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort[index].visible = false
+            this.setState({ selectListShort })
+        }
+
     }
 
     changeParams(e, index) {
@@ -70,8 +131,8 @@ export default class Enter extends Component {
         this.setState({ parameter })
     }
 
-    onSubmit(index) {
-        let { selectList, parameter } = this.state
+    onSubmit(index, type) {
+        let { parameter } = this.state
         let isRight = true
         parameter.forEach(item => {
             if (item.value === "") {
@@ -85,17 +146,35 @@ export default class Enter extends Component {
         if (!isRight) {
             return
         }
-        selectList[index].parameter = parameter
-        selectList[index].visible = false
-        this.setState({ selectList, parameter: [] })
+        if (type === 0) {
+            let { selectListLong } = this.state
+            selectListLong[index].parameter = parameter
+            selectListLong[index].visible = false
+            this.setState({ selectListLong, parameter: [] })
+        } else {
+            let { selectListShort } = this.state
+            selectListShort[index].parameter = parameter
+            selectListShort[index].visible = false
+            this.setState({ selectListShort, parameter: [] })
+        }
+
+    }
+
+
+    changeTab(e) {
+        // this.setState({ tabsIndex: parseInt(e) })
+    }
+
+    changeCheck(e) {
+        this.setState({ checked: e.target.checked })
     }
 
     render() {
         const { tabIndex, indicateList, } = this.props
-        const { selectList, parameter } = this.state
+        const { selectListLong, parameter, tabsIndex } = this.state
         return (
             <div style={tabIndex === 0 ? { display: 'block' } : { display: 'none' }}>
-                <div  className="enter-wrapper">
+                <div className="enter-wrapper">
                     <div className="title">Technical indicators:</div>
                     <div className="indicate-list">
                         {indicateList.map((item, index) => {
@@ -106,85 +185,47 @@ export default class Enter extends Component {
                             )
                         })}
                     </div>
-                    <div className="title">Has Select:</div>
-                    <div className="select-list">
-                        <div className="head">
-                            <span>Condition</span>
-                            <span>Comparison</span>
-                            <span>Value</span>
-                            <span>Delete</span>
-                        </div>
-                        {selectList.length === 0 ? <div className="no-list">No Select</div> : null}
-                        {selectList.map((item, index) => {
-                            let operateValue = ""
-                            if (item.operator === '>') {
-                                operateValue = '大于'
-                            } else if (item.operator === '<') {
-                                operateValue = '小于'
-                            } else {
-                                operateValue = '区间'
-                            }
-                            return (
-                                <div className="select-item" key={index}>
-                                    <div className="name" onClick={this.showModal.bind(this, index)}>
-                                        <span>{item.name}</span>
-                                        <span>
-                                            ({item.parameter.map((parameter, parameterIndex) => {
-                                                return (
-                                                    <span key={parameterIndex}>{parameter.value}{item.parameter.length > (parameterIndex + 1) ? ',' : ""}</span>
-                                                )
-                                            })})
+                    {/* <div className="title">Has Select:</div> */}
 
-                                        </span>
-                                    </div>
-                                    <div className="select-wrapper">
-                                        <Select value={operateValue} style={{ width: 180 }} onChange={(e) => this.changeCompare(e, index)}>
-                                            <Option value=">">大于</Option>
-                                            <Option value="<">小于</Option>
-                                            <Option value="~">区间</Option>
-                                        </Select>
-                                    </div>
-                                    <div className="input-wrapepr">
-                                        {
-                                            item.operator === '>' || item.operator === '<' ?
-                                                <input className="input-1" type="number" value={item.comparand} onChange={(e) => this.changeInput1(e, index)} /> :
-                                                <div className="range">
-                                                    <input className="input-2" type="number" value={item.value1} onChange={(e) => this.changeInput2(e, index)} />
-                                                    <span>~</span>
-                                                    <input className="input-2" type="number" value={item.value2} onChange={(e) => this.changeInput3(e, index)} />
-                                                </div>
-                                        }
+                    <Tabs type="card" onChange={this.changeTab.bind(this)} activeKey={tabsIndex.toString()}>
+                        <TabPane tab="Has Select" key="1">
+                            {/* <div className="condition-select">
+                                <Checkbox checked={this.state.checked} style={{ marginRight: 5 }} onChange={this.changeCheck.bind(this)} /><span>Open a long position before clearing out the empty position</span>
+                            </div> */}
+                            <SelectList
+                                parameter={parameter}
+                                selectList={selectListLong}
+                                showModal={(index) => this.showModal(index, 0)}
+                                hideModal={(index) => this.hideModal(index, 0)}
+                                changeCompare={(e, index) => this.changeCompare(e, index, 0)}
+                                changeInput1={(e, index) => this.changeInput1(e, index, 0)}
+                                changeInput2={(e, index) => this.changeInput2(e, index, 0)}
+                                changeInput3={(e, index) => this.changeInput3(e, index, 0)}
+                                cancelIndicate={(index) => this.cancelIndicate(index, 0)}
+                                changeParams={(e, parameterIndex) => this.changeParams(e, parameterIndex)}
+                                onSubmit={(index) => this.onSubmit(index,0)}
+                            />
+                        </TabPane>
+                        {/* <TabPane tab="Short condition" key="2">
+                            <div className="condition-select">
+                                <Checkbox checked={this.state.checked} style={{ marginRight: 5 }} onChange={this.changeCheck.bind(this)} /><span>Open a short position before clearing out the empty position</span>
+                            </div>
+                            <SelectList
+                                parameter={parameter}
+                                selectList={selectListShort}
+                                showModal={(index) => this.showModal(index, 1)}
+                                hideModal={(index) => this.hideModal(index, 1)}
+                                changeCompare={(e, index) => this.changeCompare(e, index, 1)}
+                                changeInput1={(e, index) => this.changeInput1(e, index, 1)}
+                                changeInput2={(e, index) => this.changeInput2(e, index, 1)}
+                                changeInput3={(e, index) => this.changeInput3(e, index, 1)}
+                                cancelIndicate={(index) => this.cancelIndicate(index, 1)}
+                                changeParams={(e, parameterIndex) => this.changeParams(e, parameterIndex)}
+                                onSubmit={(index) => this.onSubmit(index,1)}
+                            />
+                        </TabPane> */}
+                    </Tabs>
 
-                                    </div>
-                                    <div className="img-wrapepr">
-                                        <img src={close_img} alt="" className="close-img" onClick={this.cancelIndicate.bind(this, index)} />
-                                    </div>
-                                    <Modal
-                                        visible={item.visible}
-                                        title={item.name + '参数设置'}
-                                        onCancel={this.hideModal.bind(this, index)}
-                                        onOk={this.onSubmit.bind(this, index)}
-                                        okText={'确定'}
-                                        width="500px"
-                                        centered
-                                        closable
-                                    >
-                                        <div className="params-list">
-                                            {parameter.map((parameterItem, parameterIndex) => {
-                                                return (
-                                                    <div className="param-item" key={parameterIndex}>
-                                                        <span className="param-name">{parameterItem.label}:</span>
-                                                        <input type="number" value={parameterItem.value} onChange={(e) => this.changeParams(e, parameterIndex)} />
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-
-                                    </Modal>
-                                </div>
-                            )
-                        })}
-                    </div>
                 </div>
 
                 <div className="btn-wrapper">

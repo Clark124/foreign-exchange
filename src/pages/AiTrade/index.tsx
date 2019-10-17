@@ -9,6 +9,9 @@ import Footer from '../../Components/Footer/index'
 import Build from './components/Build/index'
 import Intelli from './components/Intelli/index'
 import List from './components/List/index'
+import Rank from './components/Rank/index'
+import Detail from './components/Detail/index'
+import DetailReport from './components/DetailReport/index'
 
 type IProps = RouteComponentProps
 
@@ -23,6 +26,9 @@ export default class AiTrade extends Component<IProps>{
                     <Route exact path="/aiTrade/intelli" component={Intelli} />
                     <Route exact path="/aiTrade/intelli/:id" component={Intelli} />
                     <Route exact path="/aiTrade/list" component={List} />
+                    <Route exact path="/aiTrade/rank" component={Rank} />
+                    <Route exact path="/aiTrade/detail/:id" component={Detail} />
+                    <Route exact path="/aiTrade/detail/report/:id" component={DetailReport} />
                 </Switch>
                 <Footer />
             </div>

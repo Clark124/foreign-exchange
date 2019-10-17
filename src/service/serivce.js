@@ -23,6 +23,11 @@ export function getCountKline(data) {
     return get(market + '/quote/kline/data', data)
 }
 
+//股票K线图最后一根K线数据
+export function getLastKline(data) {
+    return postData(market + '/quote/internal/lastkline', data)
+}
+
 
 //注册
 export function register(data) {
@@ -48,6 +53,19 @@ export function homeList(data) {
 //行情数据
 export function quoteReal(data) {
     return get(market + '/quote/real', data)
+}
+
+//添加自选
+export function addOptional(data, token) {
+    return getAddToken(host + '/market/favorite/add', data, token)
+}
+//删除自选
+export function deleteOptional(data, token) {
+    return getAddToken(host + '/market/favorite/delete', data, token)
+}
+//自选列表
+export function optionalList(data, token) {
+    return getAddToken(host + '/market/favorite/list', data, token)
 }
 
 
@@ -79,14 +97,11 @@ export function getCode(data) {
 
 //交易室
 
-//股票K线图最后一根K线数据
-export function getLastKline(data) {
-    return postData(ezquant + '/quote/internal/lastkline', data)
-}
+
 
 //查询股票代码的行情
 export function getQuote(data) {
-    return get(ezquant + '/quote/real', data)
+    return get(market + '/quote/real', data)
 }
 
 //交易及资金数据
@@ -250,8 +265,8 @@ export function fetchStategyList(data, token) {
 }
 
 //策略详情
-export function strategyDetail(data,token) {
-    return getAddToken(host + '/intelli/script/detail', data,token)
+export function strategyDetail(data, token) {
+    return getAddToken(host + '/intelli/script/detail', data, token)
 }
 
 //编译策略
@@ -265,8 +280,8 @@ export function saveStrategy(data, token) {
 }
 
 //开始回测
-export function backtest(data,token) {
-    return getAddToken(host + '/intelli/script/backtest', data,token)
+export function backtest(data, token) {
+    return getAddToken(host + '/intelli/script/backtest', data, token)
 }
 
 //沪深300
@@ -285,33 +300,38 @@ export function deployStrategy(data) {
 }
 
 //我的策略列表
-export function myStrategyList(data,token) {
-    return getAddToken(host + '/my/strategy/list', data,token)
+export function myStrategyList(data, token) {
+    return getAddToken(host + '/my/strategy/list', data, token)
 }
 
 //删除我的策略
-export function deleteStrategy(data) {
-    return postData(ezquant + '/quant/strategy/delete', data)
+export function deleteStrategy(data, token) {
+    return getAddToken(host + '/my/strategy/delete', data, token)
 }
 
 //发布的策略
-export function deployStrategyList(data) {
-    return postData(ezquant + '/quant/deploy/list/data', data)
+export function deployStrategyList(data, token) {
+    return getAddToken(host + '/my/strategy/deploy/list', data, token)
+}
+
+//发布策略列表-shared
+export function shareStrategyList(data, token) {
+    return getAddToken(host + '/my/strategy/shared/list', data, token)
 }
 
 //删除发布的策略
-export function deleteDeploy(data) {
-    return postData(ezquant + '/quant/delete/publish', data)
+export function deleteDeploy(data,token) {
+    return getAddToken(host + '/my/strategy/deploy/delete', data,token)
 }
 
 //暂停发布的策略
-export function suspendDeploy(data) {
-    return postData(ezquant + '/quant/strategy/status', data)
+export function suspendDeploy(data, token) {
+    return getAddToken(host + '/my/strategy/deploy/update', data, token)
 }
 
 //托管的策略
-export function trustStrategy(data) {
-    return postData(ezquant + '/quant/deploy/list/data', data)
+export function trustStrategy(data, token) {
+    return getAddToken(host + '/intelli/script/run', data, token)
 }
 
 //设置交易方式
@@ -320,8 +340,8 @@ export function setTradeMethod(data) {
 }
 
 //删除托管的策略
-export function deleteTrust(data) {
-    return postData(ezquant + '/quant/deploy/delete', data)
+export function deleteTrust(data, token) {
+    return getAddToken(host + '/my/strategy/deploy/delete', data, token)
 }
 
 //信号通知方式
@@ -363,15 +383,19 @@ export function collectFollow(data) {
 }
 
 //获取排行榜数据
-export function rankData(data) {
-    return postData(ezquant + '/quant/get/ranking', data)
+export function rankData(data, token) {
+    return getAddToken(host + '/strategy/list/ranking', data, token)
+}
+
+export function rankDataLatest(data, token) {
+    return getAddToken(host + '/strategy/list/latest', data, token)
 }
 
 
 //排行
 //排行榜的策略详情
-export function strategyDetailData(data) {
-    return postData(ezquant + '/strategy/write/detail', data)
+export function strategyDetailData(data, token) {
+    return getAddToken(host + '/strategy/list/detailed', data, token)
 }
 
 //添加收藏
@@ -380,8 +404,8 @@ export function addCollect(data) {
 }
 
 //策略详情回测报告
-export function strategyDetailReport(data) {
-    return postData(ezquant + '/quant/backtest/report/detail', data)
+export function strategyDetailReport(data,token) {
+    return getAddToken(host + '/my/strategy/backtest/report', data,token)
 }
 
 //回测列表
@@ -407,18 +431,18 @@ export function strategyVersion(data) {
 
 //搭建策略
 //指标列表
-export function indicateList(data,token) {
-    return getAddToken(host + '/strategy/builder/system', data,token)
+export function indicateList(data, token) {
+    return getAddToken(host + '/strategy/builder/system', data, token)
 }
 
 //编译策略代码
-export function createStrategyCode(data) {
-    return postData(ezquant + '/quant/strategy/build/create', data)
+export function createStrategyCode(data, token) {
+    return getAddToken(host + '/strategy/builder/create', data, token)
 }
 
 //保存创建的策略
-export function saveCreateStrategy(data) {
-    return postData(ezquant + '/quant/strategy/build/save', data)
+export function saveCreateStrategy(data, token) {
+    return getAddToken(host + '/strategy/builder/save', data, token)
 }
 
 

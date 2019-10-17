@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { message } from 'antd'
 import { RouteComponentProps, withRouter } from 'react-router';
-import { getQuote, getKline } from '../../service/serivce'
+import { getQuote, getKline, optionalList } from '../../service/serivce'
 import { changeNumber } from '../../utils/utils'
 
 import icon_clock from '../../assets/images/clock.png'
@@ -13,6 +13,7 @@ import RatePannel from './components/RatePannel'
 
 import './index.less'
 
+
 type IProps = RouteComponentProps
 
 interface IState {
@@ -21,19 +22,33 @@ interface IState {
     number: number;
     quote: any;
     stockDate: any;
+    optionalList: optionItem[];
 
 }
-class Home extends Component<IProps,IState>{
+
+function getToken() {
+    let token = ""
+    const userInfo = localStorage.getItem('userInfo')
+    if (userInfo) {
+        token = JSON.parse(userInfo).token
+    }
+    return token
+}
+
+
+class Home extends Component<IProps, IState>{
     state = {
         content: "",
         isChecked: false,
         number: 1,
         quote: {},
         stockDate: [],
+        optionalList: [],
     }
     UNSAFE_componentWillMount() {
         // this.onGetQuote('000001.SS')
         // this.onGetKline('000001.SS', 6)
+        // this.getOptionalList()
     }
     //股票行情数据
     onGetQuote(code: string) {
@@ -56,6 +71,22 @@ class Home extends Component<IProps,IState>{
     nav() {
         this.props.history.push('/edit')
     }
+    //自选列表
+    getOptionalList() {
+        const token = getToken()
+        if (token) {
+            optionalList({}, token).then(res => {
+                if (res.data.LWORK) {
+                    console.log(res.data.LWORK)
+                    this.setState({ optionalList: res.data.LWORK })
+                } else {
+                    this.setState({ optionalList: [] })
+                }
+
+            })
+        }
+
+    }
 
     periodCallback() {
 
@@ -73,8 +104,8 @@ class Home extends Component<IProps,IState>{
                             </div>
                             <span className="more btn">MORE +</span>
                         </div>
-                       
-                        <RatePannel {...this.props}/>
+
+                        <RatePannel {...this.props} optionalList={this.state.optionalList}/>
                     </div>
 
                 </div>

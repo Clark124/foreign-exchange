@@ -95,7 +95,7 @@ export default class Outer extends Component {
         const { selectList, parameter } = this.state
         return (
             <div style={tabIndex === 1 ? { display: 'block' } : { display: 'none' }}>
-                <div  className="enter-wrapper">
+                <div className="enter-wrapper">
                     <div className="title">Technical indicators:</div>
                     <div className="indicate-list">
                         {indicateList.map((item, index) => {
@@ -137,22 +137,26 @@ export default class Outer extends Component {
 
                                         </span>
                                     </div>
-                                    <div className="select-wrapper">
-                                        <Select value={operateValue} style={{ width: 180 }} onChange={(e) => this.changeCompare(e, index)}>
-                                            <Option value=">">大于</Option>
-                                            <Option value="<">小于</Option>
-                                            <Option value="~">区间</Option>
-                                        </Select>
-                                    </div>
+                                    {item.operator === "" ? <div className="select-wrapper">---</div> :
+                                        <div className="select-wrapper">
+                                            <Select value={operateValue} style={{ width: 180 }} onChange={(e) => this.props.changeCompare(e, index)}>
+                                                <Option value=">">大于</Option>
+                                                <Option value="<">小于</Option>
+                                                <Option value="~">区间</Option>
+                                            </Select>
+                                        </div>
+                                    }
                                     <div className="input-wrapepr">
                                         {
                                             item.operator === '>' || item.operator === '<' ?
-                                                <input className="input-1" type="number" value={item.comparand} onChange={(e) => this.changeInput1(e, index)} /> :
-                                                <div className="range">
-                                                    <input className="input-2" type="number" value={item.value1} onChange={(e) => this.changeInput2(e, index)} />
-                                                    <span>~</span>
-                                                    <input className="input-2" type="number" value={item.value2} onChange={(e) => this.changeInput3(e, index)} />
-                                                </div>
+                                                <input className="input-1" type="number" value={item.comparand} onChange={(e) => this.props.changeInput1(e, index)} /> :
+                                                item.operator === "" ?
+                                                    <div>---</div> :
+                                                    <div className="range">
+                                                        <input className="input-2" type="number" value={item.value1} onChange={(e) => this.props.changeInput2(e, index)} />
+                                                        <span>~</span>
+                                                        <input className="input-2" type="number" value={item.value2} onChange={(e) => this.props.changeInput3(e, index)} />
+                                                    </div>
                                         }
 
                                     </div>
@@ -188,8 +192,8 @@ export default class Outer extends Component {
                 </div>
 
                 <div className="btn-wrapper">
-                    <div className="btn" onClick={()=>this.props.changeStep(0)}>BACK</div>
-                    <div className="btn" onClick={()=>this.props.changeStep(2)}>NEXT</div>
+                    <div className="btn" onClick={() => this.props.changeStep(0)}>BACK</div>
+                    <div className="btn" onClick={() => this.props.changeStep(2)}>NEXT</div>
                 </div>
             </div>
 

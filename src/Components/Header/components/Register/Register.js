@@ -47,7 +47,7 @@ class Register extends Component {
         }
         this.setState({ status: 'loading' })
         register(data).then(res => {
-            if (res.data.id) {
+            if (res.data&&res.data.id) {
                 localStorage.setItem('userId', res.data.id)
                 const data = {
                     user_id: res.data.id
@@ -56,14 +56,20 @@ class Register extends Component {
                     if (res.data === 'fail') {
                         message.error('active fail')
                     } else {
-                        message.success("Register success ,please check your email!")
+                        message.success("Register success ,please check your email!", 3, () => {
+                            this.props.successRegister()
+                        })
                     }
-                    this.setState({ status: 'success' })
                 })
-                this.props.successRegister()
+            } else if (res.error) {
+                message.error(res.error)
+                this.setState({ status: 'fail' })
+               
             } else {
                 this.props.failRegister()
             }
+        }).catch(err=>{
+            message.error('register fail')
         })
 
 

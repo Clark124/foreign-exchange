@@ -1,0 +1,140 @@
+.rank-layout{
+  background: rgb(247, 247, 247)
+}
+.nav-title {
+  padding: 20px 0;
+  font-size: 16px;
+  color: #333;
+  > span {
+    margin-right: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      color: #999;
+    }
+    &:active {
+      opacity: 0.5;
+    }
+    &.current {
+      color: #2a89ff;
+      &:hover {
+        color: blue;
+      }
+    }
+  }
+}
+.rank-wrapper {
+  .tab-header {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    .tab-item {
+      display: inline-block;
+      text-align: center;
+      padding: 7px 30px;
+      border-radius: 23px;
+      cursor: pointer;
+      &:active {
+        opacity: 0.5;
+      }
+      &.active {
+        background: #2a89ff;
+        color: #fff;
+      }
+    }
+  }
+  .data-list {
+    margin-top: 20px;
+    min-height: 500px;
+  }
+  .data-item {
+    width: 100%;
+    box-sizing: border-box;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    display: flex;
+    height: 213px;
+    .item-index {
+      position: relative;
+      width: 94px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .index {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: #999;
+        &.first {
+          color: #2a89ff;
+        }
+      }
+    }
+    .content {
+      width: 610px;
+      .stock-name {
+        font-size: 20px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover{
+            color: #999;
+        }
+        &:active{
+            opacity: 0.5;
+        }
+      }
+      .info-list,
+      .info-data {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        margin-bottom: 10px;
+        > span {
+          // display: inline-block;
+          // width: 150px;
+          // flex: 1;
+          // text-align: center;
+          // margin-right: 5px;
+        }
+      }
+      .info-data{
+        >span{
+          // flex:1;
+          // text-align: left;
+        }
+      }
+      .info-data {
+        color: #f90;
+        &.green {
+          color: green;
+        }
+      }
+      .intro {
+        color: #333;
+        font-size: 15px;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .chart-wrapper {
+      flex: 1;
+    }
+  }
+  .no-data{
+      text-align: center;
+      height: 500px;
+      line-height: 500px;
+  }
+  .pagination-wrapper {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -8,9 +8,10 @@ import { Select, message, DatePicker } from 'antd'
 import TradeRoomChart from '../../../../Components/traderoomchart/traderoomchart'
 import AddFuncDialog from './Components/AddFuncDialog/AddFuncDialog'
 import AddStrategyDialog from './Components/AddStrategyDialog/AddStrategyDialog';
+import RunStrategyModel from './Components/RunStrategyModal/index'
 import Loading from '../../../../Components/Loading/index'
 
-import { getKline, getQuote, compileStrategy, saveStrategy, strategyDetail, backtest } from '../../../../service/serivce'
+import { getKline, getQuote, compileStrategy, saveStrategy, strategyDetail, backtest, trustStrategy } from '../../../../service/serivce'
 import { changeNumber } from '../../../../utils/utils'
 import Moment from 'moment'
 
@@ -56,6 +57,7 @@ interface IState {
     strategy_type: string;
     fncDialog: boolean;
     straDialog: boolean;
+    runStrategy: boolean;
     paramList: Param[];
     compileInfo: string;
     strategyTitle: string;
@@ -88,6 +90,7 @@ export default class Intelli extends Component<IProps> {
         strategy_type: '',
         fncDialog: false,
         straDialog: false,
+        runStrategy: false,
         paramList: [{
             name: 'initCaptial',
             type: 1,
@@ -121,7 +124,7 @@ export default class Intelli extends Component<IProps> {
             strategyDetail({ id: strategyId }, token).then(res => {
                 const { description, express, name, params } = res.data
                 let paramsList = []
-                if (params) {
+                if (params && JSON.parse(params).length > 0) {
                     paramsList = JSON.parse(params)
                 }
                 this.setState({
@@ -198,7 +201,7 @@ export default class Intelli extends Component<IProps> {
                 this.setState({ compileInfo: info })
                 message.error('策略编译失败！')
             }
-        }).catch(err=>{
+        }).catch(err => {
             this.setState({ status: "success" })
         })
 
@@ -257,7 +260,7 @@ export default class Intelli extends Component<IProps> {
                 } else if (res.error) {
                     message.error(res.error)
                 }
-            }).catch(err=>{
+            }).catch(err => {
                 // this.setState({ status: "success" })
             })
 
@@ -302,7 +305,59 @@ export default class Intelli extends Component<IProps> {
         })
 
     }
+    //托管策略
+    toRunStrategy(value: { name: string; discription: string, isPublic: boolean }) {
+        const { code, period, stockCode, paramList ,strategyTitle} = this.state
+        const strategyId = this.props.match.params.id
+        if (!strategyId) {
+            message.error('please save first')
+            return
+        }
+        let strategy_params: any = {}
+        if (paramList.length > 0) {
+            paramList.forEach((item) => {
+                strategy_params[item.name] = item.defaultValue
+            })
+        }
 
+        const data = {
+            account_id: 0,
+            strategy_name: strategyTitle,
+            express: code,
+            symbol: stockCode,
+            period: period,
+            strategy_params: JSON.stringify(strategy_params),
+            init_captital: 10000,
+            // start_date: beginTime.format('YYYY-MM-DD'),
+            // end_date: endTime.format('YYYY-MM-DD'),
+            name: value.name,
+            description: value.discription,
+            publish: value.isPublic ? 1 : 0,
+        }
+
+        const token = getToken()
+        this.setState({ status: "loading" })
+        trustStrategy(data, token).then(res => {
+            this.setState({ status: "success" })
+            if (res.success) {
+                message.success("run strategy success")
+
+            } else {
+                message.error('run fail')
+            }
+
+        })
+            .catch(err => {
+                this.setState({ status: "fail" })
+                message.error('run fail')
+                console.log(err)
+            })
+    }
+
+    onRunStrategy(value: { name: string; discription: string, isPublic: boolean }) {
+        this.setState({ runStrategy: false })
+        this.toRunStrategy(value)
+    }
     //设置回测买卖点
     setSignal(alerts: { forEach: (arg0: (resItem: any) => void) => void; }) {
         let { stockDate } = this.state
@@ -332,12 +387,11 @@ export default class Intelli extends Component<IProps> {
                 return dataItem
             }
         })
-
         this.setState({ stockDate })
         return stockDate
     }
 
-    //添加函数、策略
+    //添加函数、策略、托管
     showDialog(dialog: string) {
         this.setState({ [dialog]: true });
     }
@@ -445,7 +499,7 @@ export default class Intelli extends Component<IProps> {
     //K线图数据
     onGetKline(prod_code: string, period: number) {
         getKline({ prod_code, period }).then(res => {
-            if(res.data){
+            if (res.data) {
                 let data = res.data.candle[prod_code]
                 data = changeNumber(data, 2)
                 this.setState({ stockDate: data })
@@ -499,6 +553,7 @@ export default class Intelli extends Component<IProps> {
                 {status === 'loading' ? <Loading /> : null}
                 <AddFuncDialog visible={this.state.fncDialog} onCancel={this.hideDialog.bind(this)} onInsert={this.funcInsert.bind(this)} />
                 <AddStrategyDialog visible={this.state.straDialog} onCancel={this.hideDialog.bind(this)} onInsert={this.straInsert.bind(this)} />
+                <RunStrategyModel visible={this.state.runStrategy} onCancel={this.hideDialog.bind(this)} onRunStrategy={this.onRunStrategy.bind(this)} />
                 <div className="header-link">
                     <span className="btn">Ai-Trade</span>
                     <span className="arrow">></span>
@@ -622,6 +677,7 @@ export default class Intelli extends Component<IProps> {
                             </div>
                             <div className="btn-wrapper">
                                 <span className="backtest btn" onClick={this.toBackTest.bind(this)}>Backtest</span>
+                                <span className="backtest btn" onClick={() => { this.showDialog('runStrategy') }}>Run Strategy</span>
                             </div>
                         </div>
                     </div>

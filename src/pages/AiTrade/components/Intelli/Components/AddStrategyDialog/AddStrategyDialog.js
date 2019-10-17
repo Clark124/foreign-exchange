@@ -11,7 +11,7 @@ class AddStrategyDialog extends Component {
       title: '我的策略',
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetchStrategyist()
   }
 

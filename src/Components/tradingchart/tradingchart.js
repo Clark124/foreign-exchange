@@ -669,6 +669,7 @@ class TradingChart extends PureComponent {
         let MovingAverageTooltipOptionsSeries = [];
         let GroupTooltipOptionsSeries = [];
         let { intl ,data: initialData , width , height , margin  , ZoomAndPan , settingObj } = this.props;
+      
         let chart = lodash.cloneDeep(this.props.chart);
         let calculatorObj = chart.calculatorObj;
         if(!chart.CandlestickSeries.YAxis) chart.CandlestickSeries.YAxis = {right:{}};
@@ -690,7 +691,7 @@ class TradingChart extends PureComponent {
 
         // 处理小数点
         // const TICK_SIZE = JSON.parse(localStorage.getItem('TICK_SIZE'));
-        let tickSize =  2;
+        let tickSize =  4;
 
             displayFormatArr.forEach((item)=>{
             item.displayFormat = format(`.${tickSize}f`);

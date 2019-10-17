@@ -7,7 +7,7 @@ import Deploy from './components/Deploy'
 import Trust from './components/Trust'
 import Follow from './components/Follow'
 import Collect from './components/Collect'
-import { myStrategyList, deployStrategyList, followStrategy, collectStrategy } from '../../../../service/serivce'
+import { myStrategyList, deployStrategyList,shareStrategyList, followStrategy, collectStrategy } from '../../../../service/serivce'
 import Loading from '../../../../Components/Loading/index'
 
 const TabPane = Tabs.TabPane;
@@ -33,7 +33,7 @@ export default class StrategyList extends Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
 
         let search = this.props.location.search
         if (search === '?type=3') {
@@ -54,7 +54,7 @@ export default class StrategyList extends Component {
             if (parseInt(e) === 1) {
                 this.getMineStrategy(1)
             } else if (parseInt(e) === 3) {
-                this.getDeployStrategy(1)
+                this.getShareStrategy(1)
             } else if (parseInt(e) === 2) {
                 this.getTrustStrategy(1)
             } else if (parseInt(e) === 4) {
@@ -87,7 +87,7 @@ export default class StrategyList extends Component {
         })
     }
 
-    //发布的策略
+ 
     getDeployStrategy(page, param) {
         const token = localStorage.getItem('token')
         const data = {
@@ -110,22 +110,42 @@ export default class StrategyList extends Component {
             this.setState({ status: 'success' })
         })
     }
-    //托管的策略
-    getTrustStrategy(page,param) {
-        const token = localStorage.getItem('token')
+       //发布的策略
+    getShareStrategy(page,param){
+        const token = getToken()
         const data = {
-            token,
             page_no: page,
             page_count: 10,
-            isPublish: '0,1',
+            param: param ? param : ""
+        }
+        this.setState({ status: 'loading' })
+        shareStrategyList(data,token).then(res => {
+            
+            const { totalRow, list } = res
+            this.setState({
+                dataList: list,
+                totalRow: totalRow,
+            })
+            this.setState({ status: 'success' })
+        }).catch(err => {
+            console.log(err)
+            this.setState({ status: 'success' })
+        })
+    }
+    //托管的策略
+    getTrustStrategy(page,param) {
+        const token = getToken()
+        const data = {
+            page_no: page,
+            page_count: 10,
             param: param ? param : "",
         }
         this.setState({ status: 'loading' })
-        deployStrategyList(data).then(res => {
-            const { total_row, deploy } = res.result
+        deployStrategyList(data,token).then(res => {
+            const { totalRow, list } = res
             this.setState({
-                dataList: deploy,
-                totalRow: total_row,
+                dataList: list,
+                totalRow: totalRow,
             })
             this.setState({ status: 'success' })
         }).catch(err => {
@@ -184,7 +204,7 @@ export default class StrategyList extends Component {
         if (tabIndex === 1) {
             this.getMineStrategy(e)
         } else if (tabIndex === 3) {
-            this.getDeployStrategy(e)
+            this.getShareStrategy(e)
         } else if (tabIndex === 2) {
             this.getTrustStrategy(e)
         } else if (tabIndex === 4) {
@@ -201,7 +221,7 @@ export default class StrategyList extends Component {
         if (tabIndex === 1) {
             this.getMineStrategy(page)
         } else if (tabIndex === 3) {
-            this.getDeployStrategy(page)
+            this.getShareStrategy(page)
         } else if (tabIndex === 2) {
             this.getTrustStrategy(page)
         } else if (tabIndex === 4) {
@@ -213,10 +233,10 @@ export default class StrategyList extends Component {
     //暂停发布的策略
     suspendDeploy(index) {
         let { dataList } = this.state
-        if (dataList[index].status === '1') {
-            dataList[index].status = '0'
+        if (dataList[index].status === 'running') {
+            dataList[index].status = 'stop'
         } else {
-            dataList[index].status = '1'
+            dataList[index].status = 'running'
         }
         this.setState({ dataList })
     }
@@ -245,7 +265,7 @@ export default class StrategyList extends Component {
         if (tabIndex === 1) {
             this.getMineStrategy(1, text)
         } else if (tabIndex === 3) {
-            this.getDeployStrategy(1, text)
+            this.getShareStrategy(1, text)
         } else if (tabIndex === 2) {
             this.getTrustStrategy(1, text)
         } else if (tabIndex === 4) {
@@ -313,8 +333,6 @@ export default class StrategyList extends Component {
                 </div>
 
                 {status === 'loading' ? <Loading /> : null}
-
-
             </div>
         )
     }

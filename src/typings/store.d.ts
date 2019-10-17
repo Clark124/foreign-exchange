@@ -38,4 +38,9 @@ declare interface Quote{
     offer_grp:string;
 }
 
+declare interface optionItem {
+    symbol: string;
+    id: number;
+}
+
 

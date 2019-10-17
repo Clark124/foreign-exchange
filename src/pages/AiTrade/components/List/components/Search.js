@@ -40,12 +40,12 @@ export default class Search extends Component {
                 }
                 {tabIndex === 2 ?
                     <div className="btn-wrapper">
-                        <span className="btn"><Link to="/strategy/backtest/0">添加托管策略</Link></span>
+                        <span className="btn"><Link to="/strategy/backtest/0">Add Run Strategy</Link></span>
                     </div> : null
                 }
                 {tabIndex === 3 || tabIndex === 4 || tabIndex === 5 ?
                     <div className="btn-wrapper">
-                        <span className="btn"><Link to="/strategy/rank">更多策略</Link></span>
+                        <span className="btn"><Link to="/strategy/rank">More Strategy</Link></span>
                     </div> : null
                 }
 

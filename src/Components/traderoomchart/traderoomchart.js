@@ -3,7 +3,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types';
 import TradingChart from '../tradingchart/tradingchart'
 import Service from '../../utils/server'
-import {searchStcok} from '../../service/serivce'
+import { searchStcok } from '../../service/serivce'
 
 import { post, tick_size, optional } from '../../utils/utils'
 import '../tradingroom/tradingroom.css'
@@ -26,6 +26,9 @@ import ColorPicker from "../colorpicker/colorpicker"
 import { tsvParse, } from "d3-dsv";
 import { timeParse } from "d3-time-format";
 // 假数据
+
+import heart_blue from '../../assets/images/ax.png'
+import heart_red from '../../assets/images/axzx.png'
 
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
@@ -281,6 +284,16 @@ class TradeRoomChart extends Component {
         let last = intl.formatMessage({ id: 'last', defaultMessage: 'last' });
         let change = intl.formatMessage({ id: 'Indexchange', defaultMessage: 'change' });
 
+        let hasOptional = false
+
+        if (this.props.showOptional && this.props.optionalList && this.props.code) {
+            this.props.optionalList.forEach(item => {
+                if (item.symbol === this.props.code) {
+                    hasOptional = true
+                }
+            })
+        }
+
         return (
 
             <div style={{ display: 'flex' }}>
@@ -310,6 +323,16 @@ class TradeRoomChart extends Component {
 
                                 </div>
                             }
+                            {this.props.showOptional ?
+                                <span style={{ cursor: 'pointer' }}>
+                                    {hasOptional ?
+                                        <span style={{ color: "#fff", marginRight: 5, display: 'flex', alignItems: "center" }} onClick={() => this.props.deleteOptional()}><img style={{ width: 22 }} src={heart_red} alt="" /></span> :
+                                        <span style={{ color: '#fff', marginRight: 5, display: 'flex', alignItems: "center" }} onClick={() => this.props.addOptional()}><img style={{ width: 22 }} src={heart_blue} alt="" /></span>
+                                    }
+
+                                </span>
+                                : null
+                            }
 
                             <Tooltip placement="topRight" title={symbol}>
                                 <span className="trading_chart_symbols">{quote.prod_code}({quote.prod_name})</span>
@@ -318,7 +341,7 @@ class TradeRoomChart extends Component {
                                 <span className="tradeing_chart_change" style={{ color: quote.px_change_rate >= 0 ? upColor : downColor, padding: '0 10px' }}>{quote.last_px ? quote.last_px.toFixed(2) : '--'}</span>
                             </Tooltip>
                             <Tooltip placement="topRight" title={change}>
-                                <span className="tradeing_chart_change_rate" style={{ color: quote.px_change_rate >= 0 ? upColor : downColor }}>{quote.px_change_rate===0||quote.px_change_rate ? quote.px_change_rate.toFixed(2) : '--'}%</span>
+                                <span className="tradeing_chart_change_rate" style={{ color: quote.px_change_rate >= 0 ? upColor : downColor }}>{quote.px_change_rate === 0 || quote.px_change_rate ? quote.px_change_rate.toFixed(2) : '--'}%</span>
                             </Tooltip>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -445,7 +468,7 @@ class TradeRoomChart extends Component {
                                 </Tooltip>
                             </div>
                         </div>
-                      
+
                     </div>
                     <div id="trading_chart" className="trading_chart"
                         ref={(node) => this.trading_chart = node}
@@ -607,8 +630,8 @@ class TradeRoomChart extends Component {
             })
         }
     }
-    changeCode(item){
-        this.setState({searchText:"",searchList:[]})
+    changeCode(item) {
+        this.setState({ searchText: "", searchList: [] })
         this.props.changeStockCode(item)
     }
     //选择股票
@@ -833,7 +856,7 @@ class TradeRoomChart extends Component {
         //判断是否是自选
         this.isOptional(symbol)
     }
-   
+
     isOptional(symbol) {
         //判断是否是自选
         if (localStorage.getItem('optional')) {

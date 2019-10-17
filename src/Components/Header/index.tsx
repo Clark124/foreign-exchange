@@ -207,7 +207,7 @@ class Header extends Component<IProps> {
             } else if (index === 2) {
                 this.props.history.push('/aiTrade/list')
             } else if (index ===3) {
-                this.props.history.push('/aiTrade/list')
+                this.props.history.push('/aiTrade/rank')
             }
         } else {
             Modal.info({

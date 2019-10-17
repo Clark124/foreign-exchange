@@ -2,37 +2,55 @@ import React, { Component } from 'react'
 import ListGraphical from './ListGraphical'
 import { RouteComponentProps } from 'react-router';
 
-import { Tabs } from 'antd';
+import { Tabs, message } from 'antd';
 const { TabPane } = Tabs;
 
-interface IState {
-   
+function getToken() {
+    let token = ""
+    const userInfo = localStorage.getItem('userInfo')
+    if (userInfo) {
+        token = JSON.parse(userInfo).token
+    }
+    return token
 }
 
+interface IState {
 
-class RatePannel extends Component<RouteComponentProps> {
-   
+}
+
+interface Props {
+    optionalList: optionItem[]
+}
+
+type IProps = RouteComponentProps & Props
+
+
+class RatePannel extends Component<IProps> {
+
     state: IState = {
-    
+
     }
-   
+
     onChangeTab(e: any) {
-        console.log(e)
+        const token = getToken()
+        if (!token && e === '2') {
+            message.info('please login first')
+        }
     }
-   
+
     render() {
         return (
             <div className="tab-pane">
                 <Tabs onChange={this.onChangeTab} type="card">
                     <TabPane tab="Forex" key="1">
-                        <ListGraphical {...this.props}/> 
+                        <ListGraphical {...this.props} />
                     </TabPane>
-                
-                    <TabPane tab="Optional" key="3">
-                        Content of Tab Pane 3
+
+                    <TabPane tab="Optional" key="2">
+                        <ListGraphical {...this.props} isOptional={true} />
                     </TabPane>
                 </Tabs>
-               
+
             </div>
         )
     }

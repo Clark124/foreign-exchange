@@ -3,7 +3,7 @@ import { Radio, Table } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio';
 // import {ColumnProps} from 'antd/lib/table'
 import ChartList from './ChartList'
-import { getKline, homeList, quoteReal } from '../../../service/serivce'
+import { getKline, homeList, quoteReal, optionalList } from '../../../service/serivce'
 import { RouteComponentProps } from 'react-router-dom'
 import { changeNumber } from '../../../utils/utils'
 // import { Pagination } from 'antd';
@@ -23,22 +23,38 @@ interface List {
     ask: number,
 }
 
+
+
 interface IState {
     selectIndex: number,
     stockDate: KLineDataList,
     totalRow: number,
-    dataList: List[]
+    dataList: List[],
+    optionalList: optionItem[];
 }
 
 
+interface Props {
+    optionalList?: optionItem[];
+    isOptional?:boolean;
+}
 
-type IProps = RouteComponentProps
+type IProps = RouteComponentProps & Props
+
+function getToken() {
+    let token = ""
+    const userInfo = localStorage.getItem('userInfo')
+    if (userInfo) {
+        token = JSON.parse(userInfo).token
+    }
+    return token
+}
 
 
 export default class ListGraphical extends Component<IProps, IState> {
     columns: ({ title: string; dataIndex: string; align: string; render: (text: any, value: List) => JSX.Element; } | { title: string; dataIndex: string; align: string; render: (text: number) => JSX.Element; } | {})[];
-    
-    constructor(props:IProps){
+
+    constructor(props: IProps) {
         super(props)
         this.columns = [
             {
@@ -46,8 +62,8 @@ export default class ListGraphical extends Component<IProps, IState> {
                 dataIndex: 'currency',
                 align: "center",
                 render: (text: any, value: List) => (
-                    <div className="currency" onClick={()=>{
-                        this.props.history.push('/tradeRoom/'+value.code)
+                    <div className="currency" onClick={() => {
+                        this.props.history.push('/tradeRoom/' + value.code)
                     }}>
                         <div className="name">{text}</div>
                         <div className="code">{value.code}</div>
@@ -69,7 +85,7 @@ export default class ListGraphical extends Component<IProps, IState> {
                 render: (text: number) => (
                     <span className={text >= 0 ? 'chg' : 'chg green'}>{text}</span>
                 )
-        
+
             },
             {
                 title: 'Pirce Change',
@@ -111,6 +127,7 @@ export default class ListGraphical extends Component<IProps, IState> {
         stockDate: [],
         totalRow: 1,
         dataList: [],
+        optionalList: []
     }
     //切换列表、图形
     ChangeViewMode(e: RadioChangeEvent) {
@@ -118,9 +135,52 @@ export default class ListGraphical extends Component<IProps, IState> {
     }
 
     UNSAFE_componentWillMount() {
-        // this.onGetKline('000001.SS', 6)
-        this.getHomeList()
+        if(this.props.isOptional){
+            this.getOptionalList()
+        }else{
+            this.getHomeList()
+        }
+      
     }
+    //自选列表
+    getOptionalList() {
+        const token = getToken()
+        if (token) {
+            optionalList({}, token).then(res => {
+                if (res.data.LWORK) {
+                    let code = ""
+                    res.data.LWORK.forEach((value: { symbol: string; }) => {
+                        code = code + value.symbol + ','
+                    })
+                    quoteReal({ code }).then((res: any) => {
+                        let arr = []
+                        arr = res.map((item: any) => {
+                            return {
+                                currency: item.prod_name,
+                                code: item.prod_code,
+                                latestPrice: item.last_px,
+                                chg: item.px_change,
+                                priceChange: item.px_change_rate,
+                                open: item.open_px,
+                                high: item.high_px,
+                                low: item.last_px,
+                                bid: item.bid_grp.split(',')[0],
+                                ask: item.offer_grp.split(',')[0],
+                            }
+                        })
+                        this.setState({ dataList: arr })
+                    })
+
+                } else {
+                    this.setState({ optionalList: [] })
+                }
+
+            })
+        }
+
+    }
+
+
 
     //首页列表
     getHomeList() {
@@ -131,7 +191,7 @@ export default class ListGraphical extends Component<IProps, IState> {
             })
             quoteReal({ code }).then((res: any) => {
                 let arr = []
-                arr = res.map((item:any) => {
+                arr = res.map((item: any) => {
                     return {
                         currency: item.prod_name,
                         code: item.prod_code,
@@ -139,13 +199,13 @@ export default class ListGraphical extends Component<IProps, IState> {
                         chg: item.px_change,
                         priceChange: item.px_change_rate,
                         open: item.open_px,
-                        high:item.high_px,
+                        high: item.high_px,
                         low: item.last_px,
                         bid: item.bid_grp.split(',')[0],
                         ask: item.offer_grp.split(',')[0],
                     }
                 })
-                this.setState({dataList:arr})
+                this.setState({ dataList: arr })
             })
 
 

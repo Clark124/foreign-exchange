@@ -2,6 +2,15 @@ import React, { Component } from 'react'
 import {Modal,message} from 'antd'
 import {deleteStrategy} from '../../../../../service/serivce'
 
+function getToken() {
+    let token = ""
+    const userInfo = localStorage.getItem('userInfo')
+    if (userInfo) {
+        token = JSON.parse(userInfo).token
+    }
+    return token
+}
+
 export default class Mine extends Component {
     constructor() {
         super()
@@ -15,17 +24,15 @@ export default class Mine extends Component {
         Modal.confirm({
             title:'提示',
             content:"确定要删除这条记录吗？",
-            
             okText:"确定",
             onOk:()=>{
-                const token = localStorage.getItem('token')
-                deleteStrategy({token,id:item.id}).then(res=>{
-                    console.log(res)
+                const token = getToken()
+                deleteStrategy({id:item.id},token).then(res=>{
                     if(res.success){
-                        message.success('删除成功~')
+                        message.success('delete success')
                         this.props.refresh()
                     }else{
-                        message.success('删除失败~')
+                        message.success('delete fail')
                     }
                 })
             }
@@ -50,8 +57,8 @@ export default class Mine extends Component {
                             return (
                                 <tr className="table-item" key={index}>
                                     <td className="item-name click" onClick={()=>this.props.history.push(`/aiTrade/intelli/${item.id}`)}>{item.name}</td>
-                                    <td className="click" onClick={()=>this.props.history.push(`/aiTrade/intelli/${item.id}`)}>{item.type === "build" ? "build" : "wtrtting"}</td>
-                                    <td className="click" >{item.times}</td>
+                                    <td className="click" onClick={()=>this.props.history.push(`/aiTrade/intelli/${item.id}`)}>{item.type === "building" ? "building" : "wtrtting"}</td>
+                                    <td className="" >{item.times}</td>
                                     <td>{item.update_date}</td>
                                     <td className="operate">
                                         <span className="btn" onClick={() => this.props.history.push(`/strategy/backtest/${item.id}`)} >Backtest</span>
