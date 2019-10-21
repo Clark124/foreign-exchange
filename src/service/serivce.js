@@ -1,8 +1,8 @@
 import { get, postData, getAddToken } from '../utils/utils'
 
 
-// const host = 'http://192.168.0.149';
-const host = 'http://forex.pushutech.com'
+const host = 'http://192.168.0.149';
+// const host = 'http://forex.pushutech.com'
 const ezquant = 'http://www.ezquant.cn'
 const market = 'http://real.pushutech.com'
 
@@ -320,8 +320,8 @@ export function shareStrategyList(data, token) {
 }
 
 //删除发布的策略
-export function deleteDeploy(data,token) {
-    return getAddToken(host + '/my/strategy/deploy/delete', data,token)
+export function deleteDeploy(data, token) {
+    return getAddToken(host + '/my/strategy/deploy/delete', data, token)
 }
 
 //暂停发布的策略
@@ -350,13 +350,13 @@ export function strategyNotice(data) {
 }
 
 //跟单的策略
-export function followStrategy(data) {
-    return postData(ezquant + '/quant/with/signal/list', data)
+export function followStrategy(data, token) {
+    return getAddToken(host + '/my/strategy/follow/list', data, token)
 }
 
 //删除跟单的策略
-export function deleteFollowStrategy(data) {
-    return postData(ezquant + '/trade/signal/delete', data)
+export function deleteFollowStrategy(data,token) {
+    return getAddToken(host + '/strategy/list/follow/delete', data,token)
 }
 //设置跟单交易方式
 export function setFollowTradeMethod(data) {
@@ -368,18 +368,18 @@ export function followStrategyNotice(data) {
 }
 
 //收藏的策略
-export function collectStrategy(data) {
-    return postData(ezquant + '/quant/collect/list', data)
+export function collectStrategy(data, token) {
+    return getAddToken(host + '/my/strategy/collect/list', data, token)
 }
 
 //删除收藏策略
-export function deleteCollect(data) {
-    return postData(ezquant + '/comment/cancelcollect', data)
+export function deleteCollect(data, token) {
+    return getAddToken(host + '/strategy/list/collect/delete', data, token)
 }
 
 //收藏策略跟单
-export function collectFollow(data) {
-    return postData(ezquant + '/pay/alipay/web/order', data)
+export function collectFollow(data, token) {
+    return getAddToken(host + '/strategy/list/follow', data, token)
 }
 
 //获取排行榜数据
@@ -399,13 +399,13 @@ export function strategyDetailData(data, token) {
 }
 
 //添加收藏
-export function addCollect(data) {
-    return postData(ezquant + '/comment/addcollect', data)
+export function addCollect(data, token) {
+    return getAddToken(host + '/strategy/list/collect/add', data, token)
 }
 
 //策略详情回测报告
-export function strategyDetailReport(data,token) {
-    return getAddToken(host + '/my/strategy/backtest/report', data,token)
+export function strategyDetailReport(data, token) {
+    return getAddToken(host + '/my/strategy/backtest/report', data, token)
 }
 
 //回测列表

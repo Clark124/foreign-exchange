@@ -127,7 +127,6 @@ export default class Deploy extends Component {
             dataList = []
         }
 
-
         return (
             <div className="list-wrapper">
                  {this.state.status === 'loading' ? <Loading /> : null}
@@ -166,7 +165,7 @@ export default class Deploy extends Component {
                                     <td className="item-name click" onClick={() => this.props.history.push(`/aiTrade/detail/${item.id}`)}>{item.name}</td>
                                     <td className="click" onClick={() => this.props.history.push('/tradeRoom/' + item.symbol)}>{item.symbol}</td>
                                     <td>{period}</td>
-                                    <td>{item.start_date}</td>
+                                    <td>{item.start_date.substring(0,10)}</td>
                                     <td className={item.return_ratio >= 0 ? "profit" : "profit green"}>{(item.return_ratio * 100).toFixed(2)}%</td>
                                     <td className={item.status === 'running' ? 'status green' : "status"}>{item.status}</td>
                                     <td className="operate">

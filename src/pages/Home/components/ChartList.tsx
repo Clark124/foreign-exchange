@@ -57,7 +57,7 @@ export default class ChartList extends Component<IProps, IState>{
             let value = await this.onGetKline(item.code, 1, 240)
             arr[index].kline = value
             this.setState({ currentData: arr })
-            if(index===3){
+            if(index===(arr.length-1)){
                 this.setState({status:"success"})
             }
         })

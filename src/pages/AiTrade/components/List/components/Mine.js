@@ -41,7 +41,10 @@ export default class Mine extends Component {
         })
     }
     render() {
-        const { dataList } = this.props
+        let { dataList ,tabIndex} = this.props
+        if (parseInt(tabIndex) !== 1) {
+            dataList = []
+        }
         return (
             <div className="list-wrapper">
                 <table className="table" cellPadding="0" cellSpacing="0">
@@ -57,11 +60,11 @@ export default class Mine extends Component {
                             return (
                                 <tr className="table-item" key={index}>
                                     <td className="item-name click" onClick={()=>this.props.history.push(`/aiTrade/intelli/${item.id}`)}>{item.name}</td>
-                                    <td className="click" onClick={()=>this.props.history.push(`/aiTrade/intelli/${item.id}`)}>{item.type === "building" ? "building" : "wtrtting"}</td>
+                                    <td className="click" onClick={()=>this.props.history.push(`/aiTrade/intelli/${item.id}`)}>{item.type === "building" ? "building" : "writting"}</td>
                                     <td className="" >{item.times}</td>
-                                    <td>{item.update_date}</td>
+                                    <td>{item.update_date.slice(0,10)}</td>
                                     <td className="operate">
-                                        <span className="btn" onClick={() => this.props.history.push(`/strategy/backtest/${item.id}`)} >Backtest</span>
+                                        <span className="btn" onClick={() => this.props.history.push(`/aiTrade/intelli/${item.id}`)} >Backtest</span>
                                         <span className="btn delete" onClick={this.deleteStrategy.bind(this, item, index)}>Delete</span>
                                     </td>
                                 </tr>

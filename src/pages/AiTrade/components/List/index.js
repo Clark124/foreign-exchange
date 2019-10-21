@@ -155,19 +155,19 @@ export default class StrategyList extends Component {
     }
     //跟单的策略
     getFollowStrategy(page,param) {
-        const token = localStorage.getItem('token')
+        const token = getToken()
         const data = {
-            token,
             page_no: page,
             page_count: 10,
-            param: param ? param : "",
+            param: param ? param : ""
         }
         this.setState({ status: 'loading' })
-        followStrategy(data).then(res => {
-            const { total_row, strategy } = res.result
+        followStrategy(data,token).then(res => {
+            
+            const { totalRow, list } = res
             this.setState({
-                dataList: strategy,
-                totalRow: total_row,
+                dataList: list,
+                totalRow: totalRow,
             })
             this.setState({ status: 'success' })
         }).catch(err => {
@@ -177,19 +177,19 @@ export default class StrategyList extends Component {
     }
     //收藏的策略
     getCollectStrategy(page,param) {
-        const token = localStorage.getItem('token')
+        const token = getToken()
         const data = {
-            token,
             page_no: page,
             page_count: 10,
-            param: param ? param : "",
+            param: param ? param : ""
         }
         this.setState({ status: 'loading' })
-        collectStrategy(data).then(res => {
-            const { total_row, strategy } = res.result
+        collectStrategy(data,token).then(res => {
+            
+            const { totalRow, list } = res
             this.setState({
-                dataList: strategy,
-                totalRow: total_row,
+                dataList: list,
+                totalRow: totalRow,
             })
             this.setState({ status: 'success' })
         }).catch(err => {

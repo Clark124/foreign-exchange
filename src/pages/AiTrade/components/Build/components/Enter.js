@@ -19,14 +19,15 @@ export default class Enter extends Component {
     }
 
     onSelectIndicate(item) {
+        let value = JSON.parse(JSON.stringify(item))
         const { tabsIndex } = this.state
         if (tabsIndex === 1) {
             let { selectListLong } = this.state
-            selectListLong.push(item)
+            selectListLong.push(value)
             this.setState({ selectListLong })
         } else {
             let { selectListShort } = this.state
-            selectListShort.push(item)
+            selectListShort.push(value)
             this.setState({ selectListShort })
         }
 

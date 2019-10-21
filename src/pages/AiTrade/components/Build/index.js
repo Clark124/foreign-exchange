@@ -69,6 +69,7 @@ export default class Build extends Component {
 
         let technical_buy = []
         let technical_sell = []
+
         enterList.forEach(item => {
             let obj = {}
             obj.condition_sys_id = item.id
@@ -76,7 +77,7 @@ export default class Build extends Component {
             obj.operator = item.operator
             obj.parameter = item.parameter
             obj.mark = 1
-            if (item.operator === '>' || '<') {
+            if ((item.operator === '>') || (item.operator ==='<')) {
                 obj.comparand = item.comparand
             } else {
                 obj.comparand = item.value1 + '~' + item.value2
@@ -91,14 +92,14 @@ export default class Build extends Component {
             obj.operator = item.operator
             obj.parameter = item.parameter
             obj.mark = 3
-            if (item.operator === '>' || '<') {
+            if ((item.operator === '>') || (item.operator ==='<')) {
                 obj.comparand = item.comparand
             } else {
                 obj.comparand = item.value1 + '~' + item.value2
             }
             technical_sell.push(obj)
         })
-
+       
         let data = {
             technical_buy: JSON.stringify(technical_buy),
             technical_sell: JSON.stringify(technical_sell),

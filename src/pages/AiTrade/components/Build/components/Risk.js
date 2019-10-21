@@ -30,15 +30,31 @@ export default class Risk extends Component {
     //查看代码
     lookCode() {
         const { isRepeatBuy, buyset, singleBuyPercent, singleBuyCount, minHold, maxHold, stopProfit, stopLose, moveStopLose, strategyName } = this.state
+        if (buyset === 1 && singleBuyPercent === "") {
+            Modal.error({
+                title: "tips",
+                content: "please input buy in proportion"
+            })
+            return
+        }
+        if (buyset === 2 && singleBuyCount === "") {
+            Modal.error({
+                title: "tips",
+                content: "please input buy quantity"
+            })
+            return
+        }
+        console.log(isRepeatBuy)
         const data = {
-            is_repeat: isRepeatBuy === 'false' ? 0 : 1,
-            buyPercent: buyset === 1 ? singleBuyPercent : "",
-            buyShares: buyset === 2 ? singleBuyCount : "",
-            maxDays: maxHold,
-            minDays: minHold,
-            stopProfit: stopProfit,
-            stopLost: stopLose,
-            stopMoving: moveStopLose,
+            positionControl: isRepeatBuy === 'false' ? 1 : 0,
+            initCaptital:10000,
+            buyPercent: buyset === 1 ? singleBuyPercent : 0,
+            buyShares: buyset === 2 ? singleBuyCount : 0,
+            maxDays: maxHold?maxHold:0,
+            minDays: minHold?minHold:0,
+            stopProfit: stopProfit?stopProfit:0,
+            stopLost: stopLose?stopLose:0,
+            stopMoving: moveStopLose?moveStopLose:0,
             strategy_name: strategyName,
         }
         this.props.lookCode(data)
@@ -48,35 +64,35 @@ export default class Risk extends Component {
         const { isRepeatBuy, buyset, singleBuyPercent, singleBuyCount, minHold, maxHold, stopProfit, stopLose, moveStopLose, strategyName, strategyDiscrib } = this.state
         if (buyset === 1 && singleBuyPercent === "") {
             Modal.error({
-                title: "提示",
-                content: "请输入单次买入的总资金的比例"
+                title: "tips",
+                content: "please input buy in proportion"
             })
             return
         }
         if (buyset === 2 && singleBuyCount === "") {
             Modal.error({
-                title: "提示",
-                content: "请输入单次买入数量"
+                title: "tips",
+                content: "please input buy quantity"
             })
             return
         }
         if (strategyName.trim() === "") {
             Modal.error({
-                title: "提示",
+                title: "tips",
                 content: "please input strategy name"
             })
             return
         }
         const data = {
-            positionControl: isRepeatBuy === 'false' ? 0 : 1,
+            positionControl: isRepeatBuy === 'false' ? 1 : 0,
             initCaptital:10000,
-            buyPercent: buyset === 1 ? singleBuyPercent : "",
-            buyShares: buyset === 2 ? singleBuyCount : "",
-            maxDays: maxHold,
-            minDays: minHold,
-            stopProfit: stopProfit,
-            stopLost: stopLose,
-            stopMoving: moveStopLose,
+            buyPercent: buyset === 1 ? singleBuyPercent : 0,
+            buyShares: buyset === 2 ? singleBuyCount : 0,
+            maxDays: maxHold?maxHold:0,
+            minDays: minHold?minHold:0,
+            stopProfit: stopProfit?stopProfit:0,
+            stopLost: stopLose?stopLose:0,
+            stopMoving: moveStopLose?moveStopLose:0,
             strategy_name: strategyName,
             description: strategyDiscrib,
         }
@@ -181,7 +197,7 @@ export default class Risk extends Component {
 
 
                 <div className="btn-wrapper">
-                    <div className="btn" onClick={() => this.props.changeStep(2)}>BACK</div>
+                    <div className="btn" onClick={() => this.props.changeStep(1)}>BACK</div>
                     <div className="btn" onClick={this.lookCode.bind(this)}>VIEW CODE</div>
                     <div className="btn" onClick={this.onSave.bind(this)}>SAVE</div>
                 </div>

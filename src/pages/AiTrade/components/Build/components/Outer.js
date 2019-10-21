@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Select, Modal } from 'antd'
 import close_img from '../images/close.jpg'
+import SelectList from './SelectList'
+
 
 const Option = Select.Option;
 
@@ -17,7 +19,8 @@ export default class Outer extends Component {
 
     onSelectIndicate(item) {
         let { selectList } = this.state
-        selectList.push(item)
+        let value = JSON.parse(JSON.stringify(item))
+        selectList.push(value)
         this.setState({ selectList })
     }
 
@@ -107,7 +110,20 @@ export default class Outer extends Component {
                         })}
                     </div>
                     <div className="title">Has Select:</div>
-                    <div className="select-list">
+                    <SelectList
+                        parameter={parameter}
+                        selectList={selectList}
+                        showModal={(index) => this.showModal(index, 0)}
+                        hideModal={(index) => this.hideModal(index, 0)}
+                        changeCompare={(e, index) => this.changeCompare(e, index, 0)}
+                        changeInput1={(e, index) => this.changeInput1(e, index, 0)}
+                        changeInput2={(e, index) => this.changeInput2(e, index, 0)}
+                        changeInput3={(e, index) => this.changeInput3(e, index, 0)}
+                        cancelIndicate={(index) => this.cancelIndicate(index, 0)}
+                        changeParams={(e, parameterIndex) => this.changeParams(e, parameterIndex)}
+                        onSubmit={(index) => this.onSubmit(index, 0)}
+                    />
+                    {/* <div className="select-list">
                         <div className="head">
                             <span>Condition</span>
                             <span>Comparison</span>
@@ -188,7 +204,7 @@ export default class Outer extends Component {
                                 </div>
                             )
                         })}
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="btn-wrapper">

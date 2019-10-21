@@ -5,7 +5,7 @@ import Loading from '../../../../Components/Loading/index'
 import { Chart, Geom, Axis, Tooltip, Legend } from "bizcharts";
 import Moment from 'moment'
 import DataSet from "@antv/data-set";
-import { Modal ,Table} from 'antd'
+import { Modal, Table, message } from 'antd'
 
 function getToken() {
     let token = ""
@@ -36,7 +36,7 @@ export default class Detail extends Component {
             {
                 title: 'Buy/Sell',
                 dataIndex: 'type',
-                render: text => <span style={text === 3 ? { color: 'red' } : { color: 'green' }}>{text===1?"buy":"sell"}</span>,
+                render: text => <span style={text === 3 ? { color: 'red' } : { color: 'green' }}>{text === 1 ? "buy" : "sell"}</span>,
             },
             {
                 title: 'Price',
@@ -82,8 +82,8 @@ export default class Detail extends Component {
     followOrder(type) {
         if (!type) {
             Modal.info({
-                title: "提示",
-                content: "已经跟单过了"
+                title: "tips",
+                content: "has followed"
             })
         } else {
             this.setState({ visible: true })
@@ -91,29 +91,21 @@ export default class Detail extends Component {
     }
     followOk() {
         const { data, followCount } = this.state
-        const token = localStorage.getItem('token')
-        let userInfo = JSON.parse(localStorage.getItem("userInfo"))
-        const body = {
-            release_id: data.id,
-            link: '/quant/strategy/list?upBtn1=follow',
-            message: `${userInfo.nickname}订购了你的策略`,
-            type: 'follow'
-        }
+        const token = getToken()
         const datas = {
-            token,
-            body: JSON.stringify(body),
-            unit_count: followCount,
-            subject: `跟单${followCount}个月`
+            release_id: data.id,
+            time_count: followCount,
+            account_id: 0
         }
-        collectFollow(datas).then(res => {
-            if (res.data === 'success') {
+        collectFollow(datas, token).then(res => {
+            if (res.success) {
                 this.setState({
                     visible: false,
                     // data: { ...this.state.data, is_subscription: true }
                 })
                 // message.success('跟单成功！')
                 this.props.history.push({
-                    pathname: '/strategy/list',
+                    pathname: '/aiTrade/list',
                     search: '?type=4'
                 })
             }
@@ -123,23 +115,26 @@ export default class Detail extends Component {
     collectOrder(type) {
         if (!type) {
             Modal.info({
-                title: "提示",
-                content: "已经收藏过了"
+                title: "tips",
+                content: "has collected"
             })
         } else {
             const id = this.state.data.id
-            const token = localStorage.getItem("token")
+            const token = getToken()
             const data = {
-                token,
-                collect_id: id,
-                type: 'strategy'
+                ref_id: id,
             }
-            addCollect(data).then(res => {
-                this.setState({ data: { ...this.state.data, is_collect: true } })
-                Modal.success({
-                    title: "提示",
-                    content: "收藏成功"
-                })
+            addCollect(data, token).then(res => {
+                if (res.success) {
+                    this.setState({ data: { ...this.state.data, is_collect: true } })
+                    Modal.success({
+                        title: "tips",
+                        content: "collect success"
+                    })
+                } else {
+                    message.error('collect fail')
+                }
+
             })
         }
     }
@@ -268,7 +263,7 @@ export default class Detail extends Component {
                                 </tr>
                                 <tr className="table-item" >
                                     <td>{(data.return_ratio * 100).toFixed(2)}%</td>
-                                    <td>{Number(data.MaxDD) * 100}%</td>
+                                    <td>{(Number(data.MaxDD) * 100).toFixed(2)}%</td>
                                     <td>{data.nwinner}</td>
                                     <td>{Number(data.winner_avg).toFixed(2)}</td>
                                     <td>{data.max_nwinner}</td>
@@ -353,7 +348,7 @@ export default class Detail extends Component {
                     </table> */}
 
                         <div className="backtest-title">Trade Details</div>
-                        <Table columns={this.columns} dataSource={data.signal} rowKey={record => record.id}/>
+                        <Table columns={this.columns} dataSource={data.signal} rowKey={record => record.id} />
                         {/* <table className="table" cellPadding="0" cellSpacing="0" style={{ marginBottom: 100 }}>
                             <tbody className="t-body">
                                 <tr className="table-header">
@@ -381,25 +376,25 @@ export default class Detail extends Component {
 
                             </tbody>
                         </table> */}
-                        {/* <Modal
-                        title="跟单"
-                        visible={visible}
-                        onOk={this.followOk.bind(this)}
-                        onCancel={() => this.setState({ visible: false })}
-                        width={400}
-                    >
-                        <div className="follow-model">
-                            <div>策略名称：{strategy_name}</div>
-                            <div className="choose-count">
-                                <span>选择数量：</span>
-                                <span className="btn" onClick={this.reduceFollowCount.bind(this)}>-</span>
-                                <span className="count">{followCount}</span>
-                                <span className="btn" onClick={this.addFollowCount.bind(this)}>+</span>
-                                <span className="text">个月</span>
+                        <Modal
+                            title="Follow"
+                            visible={visible}
+                            onOk={this.followOk.bind(this)}
+                            onCancel={() => this.setState({ visible: false })}
+                            width={400}
+                        >
+                            <div className="follow-model">
+                                <div>Strategy Name：{data.strategy_name}</div>
+                                <div className="choose-count">
+                                    <span>Count：</span>
+                                    <span className="btn" onClick={this.reduceFollowCount.bind(this)}>-</span>
+                                    <span className="count">{followCount}</span>
+                                    <span className="btn" onClick={this.addFollowCount.bind(this)}>+</span>
+                                    <span className="text">month(s)</span>
+                                </div>
                             </div>
-                        </div>
 
-                    </Modal> */}
+                        </Modal>
                         {/* <Modal
                         title="策略源码"
                         visible={this.state.visibleCode}
